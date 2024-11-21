@@ -41,9 +41,4 @@
             @endforelse
         </tbody>
     </table>
-
-    <!-- Paginação -->
-    <div class="mt-4">
-        {{ $results->links() }} <!-- Links de paginação com Tailwind -->
-    </div>
 </div>
