@@ -73,37 +73,38 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($oiChange as $oilChanges)
-                    <tr wire:key="{{ $oilChanges->id }}" class=" border-b border-slate-200 dark:border-gray-700">
-                        <td class="p-4 py-5">
-                            <p class="block font-semibold text-sm text-slate-800 dark:text-slate-300">
-                                {{ $oilChanges->placa }}</p>
-                        </td>
-                        <td class="p-4 py-5">
-                            <p class="text-sm text-slate-500">{{ $oilChanges->oilChanges->quilometragem }}</p>
-                        </td>
-                        <td class="p-4 py-5">
-                            <p class="text-sm text-slate-500">{{ $oilChanges->quilometragem }}</p>
-                        </td>
-                        <td class="p-4 py-5">
-                            <p class="text-sm text-slate-500">{{ $oilChanges->tipo_oleo }}</p>
-                        </td>
-                        <td class="p-4 py-5">
-                            <p class="text-sm text-slate-500">{{ $oilChanges->observacoes }}</p>
-                        </td>
-                        <td class="p-4 py-5">
-                            <button
-                                onclick="confirm('Are you sure want to delete {{ $oilChanges->modelo }}?') || event.stopImmediatePropagation()"
-                                wire:click="delete({{ $oilChanges->id }})"><i
-                                    class="bx bx-trash cursor-pointer text-red-500"></i></button>
-                        </td>
-                    </tr>
+                @forelse($oilChange as $oilChanges)
+                <tr wire:key="{{ $oilChanges->id }}" class=" border-b border-slate-200 dark:border-gray-700">
+                    <td class="p-4 py-5">
+                        <p class="block font-semibold text-sm text-slate-800 dark:text-slate-300">
+                            {{ $oilChanges->vehicle->placa }}
+                        </p>
+                    </td>
+                    <td class="p-4 py-5">
+                        <p class="text-sm text-slate-500">{{ $oilChanges->data_troca }}</p>
+                    </td>
+                    <td class="p-4 py-5">
+                        <p class="text-sm text-slate-500">{{ $oilChanges->quilometragem }}</p>
+                    </td>
+                    <td class="p-4 py-5">
+                        <p class="text-sm text-slate-500">{{ $oilChanges->tipo_oleo }}</p>
+                    </td>
+                    <td class="p-4 py-5">
+                        <p class="text-sm text-slate-500">{{ $oilChanges->observacoes }}</p>
+                    </td>
+                    <td class="p-4 py-5">
+                        <button
+                            onclick="confirm('Are you sure want to delete {{ $oilChanges->modelo }}?') || event.stopImmediatePropagation()"
+                            wire:click="delete({{ $oilChanges->id }})"><i
+                                class="bx bx-trash cursor-pointer text-red-500"></i></button>
+                    </td>
+                </tr>
                 @empty
-                    <tr>
-                        <td colspan="4" class="px-4 py-2 text-center text-sm text-gray-800">Nenhum usuário
-                            encontrado.
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="4" class="px-4 py-2 text-center text-sm text-gray-800">Nenhum usuário
+                        encontrado.
+                    </td>
+                </tr>
                 @endforelse
             </tbody>
 
