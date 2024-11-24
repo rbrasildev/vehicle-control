@@ -18,4 +18,14 @@ class Vehicle extends Model
         'ano',
         'chassi'
     ];
+
+    public function oilChange()
+    {
+        return $this->hasMany(OilChange::class);
+    }
+
+    public function scopeSearch($query, $value)
+    {
+        $query->where('placa', 'like', "%{$value}%")->orWhere('chassi', 'like', "%{$value}%");
+    }
 }

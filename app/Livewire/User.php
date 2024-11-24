@@ -11,16 +11,19 @@ class User extends Component
 {
     use WithPagination;
 
-    public $query = '';
-    public $results = [];
+    public $perPage = "5";
+    public $search = '';
 
-    public function updatedQuery()
+
+
+    public function delete($userId)
     {
-        $this->results = Users::where('name', 'like', '%' . $this->query . '%')->get();
+        User::find($userId)->delete();
     }
+
 
     public function render()
     {
-        return view('livewire.user', ['user' => Users::paginate(5)]);
+        return view('livewire.user', ['user' => Users::search($this->search)->paginate($this->perPage)]);
     }
 }
