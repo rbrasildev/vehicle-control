@@ -13,12 +13,21 @@ class ServiceOrderToday extends Component
     public $statusCounts;
     public $technicianOsCount;
     public $currentConnection;
+    public $pops;
+    public $pop_id;
 
     public function mount($status = null)
     {
         $this->currentConnection = session('currentConnection', 'sgp');
         $this->status = $status;
         $this->loadOpen();
+        $this->getPop();
+    }
+
+    public function getPop()
+    {
+        $this->pops = DB::connection($this->currentConnection)
+            ->table('admcore_pop')->get();
     }
 
     public function loadOpen()
@@ -58,6 +67,7 @@ class ServiceOrderToday extends Component
                 'auth_user.username',
                 'atendimento_motivoos.descricao'
             )
+            ->where('admcore_pop.id', $this->pop_id)
             ->whereDate('atendimento_os.data_agendamento', '=', now()->toDateString());
 
         if (!is_null($this->status)) {

@@ -12,6 +12,14 @@
                 </select>
             </div>
             <livewire:city-select />
+            <div class="max-w-sm mx-start">
+                <select wire:model.live="pop_id"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    @foreach ($pops as $pop)
+                        <option value={{ $pop->id }}>{{ $pop->cidade }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
 
         <ul class="flex gap-2 justify-end items-center">
@@ -45,6 +53,10 @@
                     </li>
                 @endif
             @endforeach
+            <li class="flex flex-col justify-center items-center border-r  darK:border-slate-400 px-4">
+                <p class="dark:text-slate-400">Total</p>
+                <p class="font-bold dark:text-slate-200">{{ STR_PAD($clientes->count(), 2, '0', STR_PAD_LEFT) }}</p>
+            </li>
         </ul>
 
         <ul class="list-group flex gap-2 items-center">
@@ -69,7 +81,6 @@
                     <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">Bairro</th>
                     <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">Agendamento</th>
                     <th class="p-4 border-b dark:border-gray-700 dark:text-slate-400">Motivo</th>
-                    <th class="p-4 border-b dark:border-gray-700 dark:text-slate-400 ">Tempo</th>
                     <th class="p-4 border-b dark:border-gray-700 dark:text-slate-400">Status</th>
                 </tr>
             </thead>
@@ -86,7 +97,8 @@
                         <td class="p-2 border-b dark:border-gray-800">
                             <a target="blank"
                                 href="{{ env('BASE_URL') }}/admin/cliente/{{ $cliente->cliente_id }}/edit/">
-                                <p class="text-sm dark:slate-800 dark:text-slate-300 font-bold">{{ $cliente->nome }}</p>
+                                <p class="text-sm dark:slate-800 dark:text-slate-300 font-bold">{{ $cliente->nome }}
+                                </p>
                                 <p class="text-sm text-slate-500">{{ $cliente->conteudo }}</p>
                                 @if ($cliente->servicoprestado)
                                     <p class="text-sm text-slate-500 dark:text-slate-200"><span
@@ -108,15 +120,13 @@
                             <p class="text-sm text-slate-500">
                                 {{ \Carbon\Carbon::parse($cliente->data_agendamento)->format('d/m/Y') }}</p>
                         </td>
-                        <td class="p-2border-b dark:border-gray-800 w-24">
-                            @if ($cliente->status == 2)
+                        <td class="p-2 border-b dark:border-gray-800">
+                            @if ($cliente->status != 2)
+                                <livewire:os-status :status="$cliente->status" wire:key="os-status{{ $cliente->cliente_id }}" />
+                            @else
                                 <span class="text-center text-white"><livewire:time-elapsed
                                         wire:key="status-{{ $cliente->cliente_id }}" :dataCheckin="$cliente->data_checkin" /></span>
                             @endif
-                        </td>
-                        <td class="p-2 border-b dark:border-gray-800">
-                            
-
                         </td>
                     </tr>
                 @empty
