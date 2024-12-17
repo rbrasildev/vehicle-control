@@ -10,6 +10,6 @@ class OilChanges extends Component
 
     public function render()
     {
-        return view('livewire.oil-change', ['oilChange' => OilChange::paginate(10)]);
+        return view('livewire.oil-change', ['oilChange' => OilChange::with('Vehicles')->paginate(10)]);
     }
 }

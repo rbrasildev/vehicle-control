@@ -97,6 +97,50 @@ return [
             'sslmode' => 'prefer',
         ],
 
+
+        'sgp' => [
+            'driver' => 'pgsql',
+            'url' => env('DB_SGP_URL'),
+            'host' => env('DB_SGP_HOST', '127.0.0.1'),
+            'port' => env('DB_SGP_PORT', '5432'),
+            'database' => env('DB_SGP_DATABASE', 'laravel'),
+            'username' => env('DB_SGP_USERNAME', 'root'),
+            'password' => env('DB_SGP_PASSWORD', ''),
+            'charset' => env('DB_SGP_CHARSET', 'utf8'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+        'pacaja' => [
+            'driver' => 'pgsql',
+            'url' => env('DB_SGP_PACAJA_URL'),
+            'host' => env('DB_SGP_PACAJA_HOST', '127.0.0.1'),
+            'port' => env('DB_SGP_PACAJA_PORT', '5432'),
+            'database' => env('DB_SGP_PACAJA_DATABASE', 'laravel'),
+            'username' => env('DB_SGP_PACAJA_USERNAME', 'root'),
+            'password' => env('DB_SGP_PACAJA_PASSWORD', ''),
+            'charset' => env('DB_SGP_PACAJA_CHARSET', 'utf8'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+        'anapu' => [
+            'driver' => 'pgsql',
+            'url' => env('DB_SGP_ANAPU_URL'),
+            'host' => env('DB_SGP_ANAPU_HOST', '127.0.0.1'),
+            'port' => env('DB_SGP_ANAPU_PORT', '5432'),
+            'database' => env('DB_SGP_ANAPU_DATABASE', 'laravel'),
+            'username' => env('DB_SGP_ANAPU_USERNAME', 'root'),
+            'password' => env('DB_SGP_ANAPU_PASSWORD', ''),
+            'charset' => env('DB_SGP_ANAPU_CHARSET', 'utf8'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),
@@ -147,7 +191,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

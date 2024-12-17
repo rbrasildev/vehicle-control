@@ -1,38 +1,14 @@
 <!-- resources/views/home.blade.php -->
 <div>
-    <div class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-400 shadow-lg rounded-lg p-6">
-        <h2 class="text-2xl font-semibold mb-4">Bem-vindo à sua Dashboard!</h2>
-        <p>Esta é a área principal da sua dashboard. Aqui você pode adicionar seus widgets, gráficos, e outros
-            componentes.
-        </p>
+    <div class=" dark:text-gray-400 shadow rounded-xl mb-2">
+        <livewire:city-select />
     </div>
-    <div class="mt-8">
+    <div class="mt-2">
+        <livewire:client-collect-count />
+    </div>
 
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-        <!-- Caixa 1 -->
-        <div class="bg-white dark:bg-gray-800 dark:text-gray-400  p-6 rounded-lg shadow-md">
-            <h3 class="text-xl font-semibold text-gray-700 mb-3">Recolher</h3>
-            <p class="text-slate-900 text-3xl font-bold">320</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2">
+        <div>
         </div>
-        <!-- Caixa 2 -->
-        <div class="bg-white dark:bg-gray-800 dark:text-gray-400  p-6 rounded-lg shadow-md">
-            <h3 class="text-xl font-semibold text-gray-700 mb-3">Abertas</h3>
-            <p>Conteúdo do relatório.</p>
-        </div>
-        <!-- Caixa 3 -->
-        <div class="bg-white dark:bg-gray-800 dark:text-gray-400  p-6 rounded-lg shadow-md">
-            <h3 class="text-xl font-semibold text-gray-700 mb-3">Encerradas</h3>
-            <p>Conteúdo do relatório.</p>
-        </div>
-        <!-- Caixa 2 -->
-        <div class="bg-white dark:bg-gray-800 dark:text-gray-400  p-6 rounded-lg shadow-md">
-            <h3 class="text-xl font-semibold text-gray-700 mb-3">Pendentes</h3>
-            <p>Conteúdo do relatório.</p>
-        </div>
-        <!-- Caixa 3 -->
-        <div class="bg-white dark:bg-gray-800 dark:text-gray-400  p-6 rounded-lg shadow-md">
-            <h3 class="text-xl font-semibold text-gray-700 mb-3">Atrasadas</h3>
-            <p>Conteúdo do relatório.</p>
-        </div>
+        <livewire:client-collect-month />
     </div>

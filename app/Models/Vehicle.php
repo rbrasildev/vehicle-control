@@ -16,7 +16,9 @@ class Vehicle extends Model
         'marca',
         'modelo',
         'ano',
-        'chassi'
+        'tipo',
+        'quilometragem',
+        'km_ultima_troca'
     ];
 
     public function oilChange()
@@ -26,6 +28,6 @@ class Vehicle extends Model
 
     public function scopeSearch($query, $value)
     {
-        $query->where('placa', 'like', "%{$value}%")->orWhere('chassi', 'like', "%{$value}%");
+        $query->where('placa', 'like', "%{$value}%")->orWhere('modelo', 'like', "%{$value}%");
     }
 }

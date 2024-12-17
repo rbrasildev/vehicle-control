@@ -12,6 +12,8 @@ class CreateVehicle extends Component
     public $modelo = '';
     public $ano = '';
     public $chassi = '';
+    public $tipo = '';
+    public $quilometragem = '';
 
     public function save()
     {
@@ -21,7 +23,13 @@ class CreateVehicle extends Component
             'modelo' => $this->modelo,
             'ano' => $this->ano,
             'chassi' => $this->chassi,
+            'tipo' => $this->tipo,
+            'quilometragem' => $this->quilometragem,
         ]);
+
+        // Define a mensagem de sucesso e redireciona para a rota /veiculo
+        session()->flash('success', 'Veículo criado com sucesso!');
+        return redirect('/veiculos');
     }
 
     public function render()

@@ -3,6 +3,7 @@
         class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mb-2">
         Novo veículo
     </a>
+
     <div class="w-full flex justify-between items-center mb-3 mt-1">
         <div class="my-4 max-w-20 flex justify-center ">
             <select wire:model.live='perPage'
@@ -34,7 +35,11 @@
         </div>
 
     </div>
-
+    @if (session()->has('success'))
+        <div class=" bg-green-500 mb-2 text-gray-300 p-2 rounded-md">
+            {{ session('success') }}
+        </div>
+    @endif
     <div
         class="relative overflow-x-auto sm:rounded-lg flex flex-col w-full h-full text-gray-700 shadow-md rounded-lg bg-clip-border">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -57,7 +62,7 @@
                     </th>
                     <th class="p-4 border-b dark:border-gray-700 bg-gray-200 dark:bg-gray-800">
                         <p class="text-sm font-normal leading-none text-slate-500">
-                            Chassi
+                            Última troca
                         </p>
                     </th>
                     <th class="p-4 border-b dark:border-gray-700 bg-gray-200 dark:bg-gray-800">
@@ -76,8 +81,10 @@
                 @forelse($vehicles as $vehicle)
                     <tr wire:key="{{ $vehicle->id }}" class=" border-b border-slate-200 dark:border-gray-700">
                         <td class="p-4 py-5">
-                            <p class="block font-semibold text-sm text-slate-800 dark:text-slate-300">
-                                {{ $vehicle->placa }}</p>
+                            <a href="/veiculos/details/{{ $vehicle->id }}">
+                                <p class="block font-semibold text-sm text-slate-800 dark:text-slate-300">
+                                    {{ $vehicle->placa }}</p>
+                            </a>
                         </td>
                         <td class="p-4 py-5">
                             <p class="text-sm text-slate-500">{{ $vehicle->marca }}</p>
@@ -86,12 +93,13 @@
                             <p class="text-sm text-slate-500">{{ $vehicle->modelo }}</p>
                         </td>
                         <td class="p-4 py-5">
-                            <p class="text-sm text-slate-500">{{ $vehicle->chassi }}</p>
+                            <p class="text-sm text-slate-500">{{ $vehicle->km_ultima_troca }}</p>
                         </td>
                         <td class="p-4 py-5">
                             <p class="text-sm text-slate-500">{{ $vehicle->ano }}</p>
                         </td>
-                        <td class="p-4 py-5">
+                        <td class="p-4 py-5 flex gap-2">
+                            
                             <button
                                 onclick="confirm('Are you sure want to delete {{ $vehicle->modelo }}?') || event.stopImmediatePropagation()"
                                 wire:click="delete({{ $vehicle->id }})"><i
@@ -112,5 +120,4 @@
             {{ $vehicles->links() }}
         </div>
     </div>
-
 </div>

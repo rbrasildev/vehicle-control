@@ -13,12 +13,14 @@ return new class extends Migration
             $table->foreignId('id_veiculo')
                 ->constrained('veiculos')
                 ->onDelete('cascade');
+            $table->foreignId('tipo_de_oleo_id')
+                ->constrained('tipos_de_oleo')
+                ->onDelete('cascade');
             $table->date('data_troca');
             $table->integer('quilometragem');
-            $table->string('tipo_oleo', 50);
             $table->decimal('valor', 10, 2)->nullable();
             $table->text('observacoes')->nullable();
-            $table->timestamps(); // inclui as colunas created_at e updated_at
+            $table->timestamps(); 
         });
     }
 

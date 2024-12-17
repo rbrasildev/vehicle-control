@@ -16,7 +16,7 @@ class VeiculosSeeder extends Seeder
     public function run()
     {
         // Quantidade de veículos para gerar
-        $quantidade = 20;
+        $quantidade = 10;
 
         for ($i = 0; $i < $quantidade; $i++) {
             DB::table('veiculos')->insert([
@@ -24,7 +24,7 @@ class VeiculosSeeder extends Seeder
                 'marca' => fake()->company(),
                 'modelo' => fake()->word(),
                 'ano' => fake()->year(),
-                'chassi' => strtoupper(Str::random(17)),
+                'km_ultima_troca' => rand(1000, 50000),
             ]);
         }
     }
