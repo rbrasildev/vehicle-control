@@ -2,6 +2,7 @@
     <div class="flex gap-6 mb-2 justify-between">
         <div class="flex gap-2 items-center">
             <div class="max-w-sm mx-start">
+                <label for="countries" class="block  text-sm font-medium text-gray-900 dark:text-white">Status</label>
                 <select wire:model.live="status"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="" selected>Todas</option>
@@ -11,10 +12,13 @@
                     <option value="1">Encerradas</option>
                 </select>
             </div>
+
             <livewire:city-select />
             <div class="max-w-sm mx-start">
-                <select wire:model.live="pop_id"
+                <label for="pop" class="block  text-sm font-medium text-gray-900 dark:text-white">Pop</label>
+                <select id="pop" wire:model.live="pop_id"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="" selected>Todos</option>
                     @foreach ($pops as $pop)
                         <option value={{ $pop->id }}>{{ $pop->cidade }}</option>
                     @endforeach
@@ -99,11 +103,12 @@
                                 href="{{ env('BASE_URL') }}/admin/cliente/{{ $cliente->cliente_id }}/edit/">
                                 <p class="text-sm dark:slate-800 dark:text-slate-300 font-bold">{{ $cliente->nome }}
                                 </p>
-                                <p class="text-sm text-slate-500">{{ $cliente->conteudo }}</p>
                                 @if ($cliente->servicoprestado)
                                     <p class="text-sm text-slate-500 dark:text-slate-200"><span
                                             class="text-blue font-bold">Serviço prestado:</span>
                                         {{ $cliente->servicoprestado }}</p>
+                                @else
+                                    <p class="text-sm text-slate-500">{{ $cliente->conteudo }}</p>
                                 @endif
                             </a>
                         </td>

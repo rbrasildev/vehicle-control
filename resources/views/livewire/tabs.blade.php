@@ -31,13 +31,6 @@
         {{ $currentTab === 'encerradas' ? 'border-blue-500 text-blue-500' : 'border-transparent text-gray-500 hover:text-gray-700' }}">
                 Encerradas
             </button>
-
-
-            <button wire:click="setTab('geral')"
-                class="px-4 py-2 font-medium text-sm border-b-2 transition-all
-                {{ $currentTab === 'geral' ? 'border-blue-500 text-blue-500' : 'border-transparent text-gray-500 hover:text-gray-700' }}">
-                Geral
-            </button>
         </div>
 
     </div>
@@ -62,10 +55,6 @@
         @elseif ($currentTab === 'encerradas')
             <div>
                 @livewire('service-order-closed')
-            </div>
-        @elseif ($currentTab === 'geral')
-            <div>
-                @livewire('service-order-general')
             </div>
         @endif
     </div>

@@ -48,27 +48,39 @@
                             <path
                                 d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                         </svg>
-                        <span class="ms-3">Dashboard</span>
+                        <span class="ms-3 text-sm font-normal">Dashboard</span>
                     </a>
                 </li>
 
+                <li>
+                    <a href="/recolher" wire:navigate
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ isActive('recolher') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                        </svg>
+
+                        <span class="flex-1 ms-3 whitespace-nowrap text-sm font-normal">Recolhimento</span>
+                    </a>
+                </li>
                 <li>
                     <a href="/servico" wire:navigate
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ isActive('servico') }}">
                         <i
                             class="bx bxs-hard-hat text-xl flex-shrink-0 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Ordem de Serviços</span>
+                        <span class="flex-1 ms-3 whitespace-nowrap text-sm font-normal">Ordem de Serviços</span>
                     </a>
                 </li>
                 <li>
                     <a href="/fttx/onu" wire:navigate
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100  group-hover:text-gray-900 dark:hover:bg-gray-700 group {{ isActive('servico') }}">
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100  group-hover:text-gray-900 dark:hover:bg-gray-700 group {{ isActive('onu') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                             fill="#6b7280">
                             <path
                                 d="M200-120q-33 0-56.5-23.5T120-200v-160q0-33 23.5-56.5T200-440h400v-160h80v160h80q33 0 56.5 23.5T840-360v160q0 33-23.5 56.5T760-120H200Zm0-80h560v-160H200v160Zm80-40q17 0 28.5-11.5T320-280q0-17-11.5-28.5T280-320q-17 0-28.5 11.5T240-280q0 17 11.5 28.5T280-240Zm140 0q17 0 28.5-11.5T460-280q0-17-11.5-28.5T420-320q-17 0-28.5 11.5T380-280q0 17 11.5 28.5T420-240Zm140 0q17 0 28.5-11.5T600-280q0-17-11.5-28.5T560-320q-17 0-28.5 11.5T520-280q0 17 11.5 28.5T560-240Zm10-390-58-58q26-24 58-38t70-14q38 0 70 14t58 38l-58 58q-14-14-31.5-22t-38.5-8q-21 0-38.5 8T570-630ZM470-730l-56-56q44-44 102-69t124-25q66 0 124 25t102 69l-56 56q-33-33-76.5-51.5T640-800q-50 0-93.5 18.5T470-730ZM200-200v-160 160Z" />
                         </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">ONU</span>
+                        <span class="flex-1 ms-3 whitespace-nowrap text-sm font-normal">ONU</span>
                     </a>
                 </li>
 
@@ -77,7 +89,7 @@
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ isActive('veiculos') }}">
                         <i
                             class="bx bxs-car text-xl flex-shrink-0 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Veículos</span>
+                        <span class="flex-1 ms-3 whitespace-nowrap text-sm font-normal">Veículos</span>
                     </a>
                 </li>
 
@@ -90,7 +102,7 @@
                             <path
                                 d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
                         </svg>
-                        <span class="flex-1 ms-3 whitespace-nowrap">Usuários</span>
+                        <span class="flex-1 ms-3 whitespace-nowrap text-sm font-normal">Usuários</span>
                     </a>
                 </li>
             </ul>
@@ -107,5 +119,6 @@
 
 @livewireScripts
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+
 
 </html>

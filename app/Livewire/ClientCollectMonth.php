@@ -68,7 +68,6 @@ class ClientCollectMonth extends Component
 
     public function render()
     {
-        logger('Recebendo someEvent');
         return view('livewire.client-collect-month', [
             'collectThisMonth' => $this->loadOs(),
         ]);

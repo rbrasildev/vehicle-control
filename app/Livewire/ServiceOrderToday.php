@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 class ServiceOrderToday extends Component
 {
     protected $listeners = ['connectionUpdated'];
+
     public $clientes;
     public $status;
     public $statusCounts;
@@ -65,16 +66,21 @@ class ServiceOrderToday extends Component
                 'atendimento_os.status',
                 'atendimento_os.djson',
                 'auth_user.username',
-                'atendimento_motivoos.descricao'
+                'atendimento_motivoos.descricao',
+                DB::raw('COUNT(atendimento_os.status) as status_count')
             )
-            ->where('admcore_pop.id', $this->pop_id)
+
             ->whereDate('atendimento_os.data_agendamento', '=', now()->toDateString());
 
-        if (!is_null($this->status)) {
+        if (!is_null($this->pop_id) && $this->pop_id !== '') {
+            $query->where('admcore_pop.id', $this->pop_id);
+        }
+
+        if (!is_null($this->status) && $this->status !== '') {
             $query->where('atendimento_os.status', $this->status);
         }
 
-        $this->clientes = $query->orderBy('atendimento_os.status')->get();
+        $this->clientes = $query->groupBy('atendimento_os.status', 'admcore_cliente.id', 'admcore_servicointernet.login', 'admcore_pessoa.nome', 'admcore_endereco.logradouro', 'admcore_endereco.bairro', 'admcore_endereco.numero', 'admcore_endereco.complemento', 'admcore_endereco.pontoreferencia', 'admcore_pop.cidade', 'atendimento_os.prioridade', 'atendimento_os.data_agendamento', 'atendimento_os.data_checkin', 'atendimento_os.data_finalizacao', 'atendimento_os.latitude', 'atendimento_os.longitude', 'atendimento_os.conteudo', 'atendimento_os.servicoprestado', 'atendimento_os.usuario_id', 'atendimento_os.djson', 'auth_user.username', 'atendimento_motivoos.descricao') ->orderBy('atendimento_os.status')->get();
 
         $this->statusCounts = DB::connection($this->currentConnection)
             ->table('atendimento_os')

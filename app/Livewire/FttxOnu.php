@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\DB;
 class FttxOnu extends Component
 {
     public $currentConnection;
-    public $onu; // Campo para armazenar a entrada de busca do usuário
-    public $results = [];
+    public $onu; 
+    public $perPage = 20;
 
     public function mount()
     {
@@ -20,7 +20,7 @@ class FttxOnu extends Component
     public function updatedOnu()
     {
         // Executa a consulta sempre que $onu for atualizado
-        $this->results = DB::connection($this->currentConnection)->table('netcore_onu')
+        $query = DB::connection($this->currentConnection)->table('netcore_onu')
             ->select(
                 'admcore_cliente.id as cliente_id',
                 'admcore_servicointernet.id as contrato',
@@ -35,12 +35,12 @@ class FttxOnu extends Component
             ->join('admcore_pessoa', 'admcore_pessoa.id', '=', 'admcore_cliente.pessoa_id')
             ->join('admcore_clientecontratostatus', 'admcore_clientecontrato.status_id', '=', 'admcore_clientecontratostatus.id')
             ->whereRaw('LOWER(netcore_onu.phy_addr) LIKE ?', ["%{$this->onu}%"])
-            ->orWhereRaw('UPPER(netcore_onu.phy_addr) LIKE ?', ["%{$this->onu}%"])
-            ->get();
+            ->orWhereRaw('UPPER(netcore_onu.phy_addr) LIKE ?', ["%{$this->onu}%"]);
+        return $query->paginate($this->perPage);
     }
 
     public function render()
     {
-        return view('livewire.fttx-onu');
+        return view('livewire.fttx-onu', ['results' => $this->updatedOnu()]);
     }
 }
