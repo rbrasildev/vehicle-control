@@ -11,7 +11,7 @@ class ServiceOrderLate extends Component
     use WithPagination;
     protected $listeners = ['connectionUpdated'];
     public $statusCounts;
-    public $perPage = 10;
+    public $perPage = 20;
 
 
     public function loadOs()

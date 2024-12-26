@@ -1,7 +1,12 @@
 <div>
     <div class="flex gap-2 mb-2">
         <livewire:city-select />
+
+        <input type="date" wire:model.live="selectedDate" placeholder="Selecione uma data"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block ps-4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
     </div>
+
 
     <div wire:loading.class="opacity-50" wire:loading.class.remove="opacity-100"
         class="relative overflow-x-auto sm:rounded-lg flex flex-col w-full h-full text-gray-700 border dark:border-gray-800 rounded-lg bg-clip-border">
@@ -31,7 +36,7 @@
                         </td>
                         <td class="p-2 border-b dark:border-gray-800">
                             <a target="blank"
-                                href="https:sgptins.redeconexaonet.com/admin/cliente/{{ $serviceOrder->cliente_id }}/edit/">
+                            href="https://{{ session('currentConnection') }}.redeconexaonet.com/admin/cliente/{{ $serviceOrder->cliente_id }}/edit/">
                                 <p class="text-sm dark:slate-800 dark:text-slate-300 font-bold">
                                     {{ $serviceOrder->nome }}</p>
                                 <p class="text-sm text-slate-500">{{ $serviceOrder->conteudo }}</p>
@@ -71,17 +76,17 @@
             </tbody>
         </table>
         <div class="flex justify-between p-4">
-            <div class="max-w-24 mx-start ">
-                <select wire:model.live="perPage"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-            </div>
+                <div class="max-w-24 mx-start ">
+                    <select wire:model.live="perPage"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
             <div class="px-4 flex-1">
-                {{ $serviceOrders->links() }}
+                {{ $serviceOrders->links(data: ['scrollTo' => false]) }}
             </div>
         </div>
     </div>

@@ -81,7 +81,7 @@
                 </select>
             </div>
             <div class="px-4 flex-1">
-                {{ $serviceOrders->links() }}
+                {{ $serviceOrders->links(data: ['scrollTo' => false]) }}
             </div>
         </div>
     </div>

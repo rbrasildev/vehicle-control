@@ -9,14 +9,22 @@ use Livewire\WithPagination;
 class ServiceOrderClosed extends Component
 {
     use WithPagination;
+
     protected $listeners = ['connectionUpdated'];
     public $statusCounts;
-    public $perPage = 10;
+    public $perPage = 20;
+    public $selectedDate;
 
+    public function updatingSelectedDate()
+    {
+        $this->resetPage();
+    }
 
     public function loadOs()
     {
+
         $connection = session('currentConnection', 'sgp');
+
         $query = DB::connection($connection)->table('admcore_pessoa')
             ->join('admcore_cliente', 'admcore_pessoa.id', '=', 'admcore_cliente.pessoa_id')
             ->join('admcore_endereco', 'admcore_cliente.endereco_id', '=', 'admcore_endereco.id')
@@ -51,14 +59,14 @@ class ServiceOrderClosed extends Component
                 'auth_user.username',
                 'atendimento_motivoos.descricao'
             )
-            ->whereDate('atendimento_os.data_finalizacao', '=', now()->toDateString())
-            ->where('atendimento_os.status', 1)
-            ->orderBy('data_agendamento', 'desc');
-
+            ->where('atendimento_os.status', 1);
+        if ($this->selectedDate) {
+            $query->whereDate('atendimento_os.data_finalizacao', '=', $this->selectedDate);
+        }
+        $query->orderBy('data_agendamento', 'desc');
 
         return $query->paginate($this->perPage);
     }
-
 
     public function render()
     {

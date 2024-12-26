@@ -7,14 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class FttxOnu extends Component
 {
+    public $listeners = ['connectionUpdated'];
     public $currentConnection;
-    public $onu; 
+    public $onu;
     public $perPage = 20;
 
-    public function mount()
-    {
-        $this->currentConnection = session('currentConnection', 'sgp');
-    }
 
 
     public function updatedOnu()
@@ -41,6 +38,7 @@ class FttxOnu extends Component
 
     public function render()
     {
+        $this->currentConnection = session('currentConnection', 'sgp');
         return view('livewire.fttx-onu', ['results' => $this->updatedOnu()]);
     }
 }

@@ -17,7 +17,7 @@ class ServiceOrderMotivoOs extends Component
     public function mount()
     {
         $this->currentConnection = session('currentConnection', 'sgp');
-        $this->selectedMonth = now()->format('Y-m'); // Formato inicial: YYYY-MM
+        $this->selectedMonth = now()->format('Y-m'); 
     }
 
     public function connectionUpdated($newConnection)

@@ -10,9 +10,9 @@ class ServiceOrderOpen extends Component
 {
     use WithPagination;
     protected $listeners = ['connectionUpdated'];
-    
+
     public $statusCounts;
-    public $perPage = 10;
+    public $perPage = 20;
 
 
     public function loadOpen()
@@ -52,11 +52,12 @@ class ServiceOrderOpen extends Component
                 'auth_user.username',
                 'atendimento_motivoos.descricao'
             )
-            ->where('atendimento_os.status', 0)
-            ->orderBy('data_agendamento', 'desc');
+            ->where('atendimento_os.status', 0);
+        $open = $query->orderBy('data_agendamento', 'DESC')->paginate($this->perPage);
 
+        $this->statusCounts = $open->total();
 
-        return $query->paginate($this->perPage);
+        return $open;
     }
 
 

@@ -13,27 +13,29 @@ class ServiceOrderToday extends Component
     public $status;
     public $statusCounts;
     public $technicianOsCount;
-    public $currentConnection;
     public $pops;
     public $pop_id;
 
-    public function mount($status = null)
-    {
-        $this->currentConnection = session('currentConnection', 'sgp');
-        $this->status = $status;
-        $this->loadOpen();
-        $this->getPop();
-    }
+
 
     public function getPop()
     {
-        $this->pops = DB::connection($this->currentConnection)
+        $connection = session('currentConnection', 'sgp');
+
+        $this->pops = DB::connection($connection)
             ->table('admcore_pop')->get();
+    }
+
+    public function mount($status = null)
+    {
+        $this->status = $status;
     }
 
     public function loadOpen()
     {
-        $query = DB::connection($this->currentConnection)
+        $this->getPop();
+        $connection = session('currentConnection', 'sgp');
+        $query = DB::connection($connection)
             ->table('admcore_pessoa')
             ->join('admcore_cliente', 'admcore_pessoa.id', '=', 'admcore_cliente.pessoa_id')
             ->join('admcore_endereco', 'admcore_cliente.endereco_id', '=', 'admcore_endereco.id')
@@ -80,16 +82,16 @@ class ServiceOrderToday extends Component
             $query->where('atendimento_os.status', $this->status);
         }
 
-        $this->clientes = $query->groupBy('atendimento_os.status', 'admcore_cliente.id', 'admcore_servicointernet.login', 'admcore_pessoa.nome', 'admcore_endereco.logradouro', 'admcore_endereco.bairro', 'admcore_endereco.numero', 'admcore_endereco.complemento', 'admcore_endereco.pontoreferencia', 'admcore_pop.cidade', 'atendimento_os.prioridade', 'atendimento_os.data_agendamento', 'atendimento_os.data_checkin', 'atendimento_os.data_finalizacao', 'atendimento_os.latitude', 'atendimento_os.longitude', 'atendimento_os.conteudo', 'atendimento_os.servicoprestado', 'atendimento_os.usuario_id', 'atendimento_os.djson', 'auth_user.username', 'atendimento_motivoos.descricao') ->orderBy('atendimento_os.status')->get();
+        $this->clientes = $query->groupBy('atendimento_os.status', 'admcore_cliente.id', 'admcore_servicointernet.login', 'admcore_pessoa.nome', 'admcore_endereco.logradouro', 'admcore_endereco.bairro', 'admcore_endereco.numero', 'admcore_endereco.complemento', 'admcore_endereco.pontoreferencia', 'admcore_pop.cidade', 'atendimento_os.prioridade', 'atendimento_os.data_agendamento', 'atendimento_os.data_checkin', 'atendimento_os.data_finalizacao', 'atendimento_os.latitude', 'atendimento_os.longitude', 'atendimento_os.conteudo', 'atendimento_os.servicoprestado', 'atendimento_os.usuario_id', 'atendimento_os.djson', 'auth_user.username', 'atendimento_motivoos.descricao')->orderBy('atendimento_os.status')->get();
 
-        $this->statusCounts = DB::connection($this->currentConnection)
+        $this->statusCounts = DB::connection($connection)
             ->table('atendimento_os')
             ->select('status', DB::raw('COUNT(*) as total'))
             ->whereDate('data_agendamento', now()->toDateString())
             ->groupBy('status')
             ->get();
 
-        $this->technicianOsCount = DB::connection($this->currentConnection)
+        $this->technicianOsCount = DB::connection($connection)
             ->table('admcore_pessoa as pessoa')
             ->join('admcore_cliente as cliente', 'cliente.pessoa_id', '=', 'pessoa.id')
             ->join('admcore_endereco as endereco', 'cliente.endereco_id', '=', 'endereco.id')
@@ -111,13 +113,10 @@ class ServiceOrderToday extends Component
             ->get();
     }
 
-    public function updatedStatus()
-    {
-        $this->loadOpen();
-    }
+
 
     public function render()
     {
-        return view('livewire.service-order-today');
+        return view('livewire.service-order-today', ['clientes' => $this->loadOpen()]);
     }
 }

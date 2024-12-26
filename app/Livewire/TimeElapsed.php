@@ -13,28 +13,28 @@ class TimeElapsed extends Component
     public function mount($dataCheckin)
     {
 
-        $this->dataCheckin = Carbon::parse($dataCheckin)->setTimezone('America/Manaus'); 
+        $this->dataCheckin = Carbon::parse($dataCheckin)->setTimezone('America/Manaus');
         $this->updateTimeElapsed();
     }
 
     public function updateTimeElapsed()
     {
-       
-        $now = Carbon::now('America/Manaus');  
+
+        $now = Carbon::now('America/Manaus');
         $diff = $this->dataCheckin->diff($now);
 
-       
-        $hours = $diff->h + ($diff->days * 24); 
+
+        $hours = $diff->h + ($diff->days * 24);
         $minutes = $diff->i;
         $seconds = $diff->s;
 
-       
-        $this->timeElapsed = sprintf("%02d:%02d:%02d", $hours-1, $minutes, $seconds);
+
+        $this->timeElapsed = sprintf("%02d:%02d:%02d", session('currentConnection') == 'sgptins' ? $hours - 1 : $hours, $minutes, $seconds);
     }
 
     public function render()
     {
-        $this->updateTimeElapsed(); 
+        $this->updateTimeElapsed();
         return view('livewire.time-elapsed');
     }
 }

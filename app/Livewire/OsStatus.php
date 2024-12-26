@@ -14,7 +14,7 @@ class OsStatus extends Component
     {
         switch ($status) {
             case 0:
-                return '<span class="px-3 py-1 rounded-full text-white bg-red-500">Aberta</span>';
+                return '<span style="background:#f05252; color:#e2e8f0" class="px-3 py-1 rounded-full text-slate-200 bg-red-500">Aberta</span>';
             case 1:
                 return '<span class="px-3 py-1 rounded-full text-white bg-green-500">Finalizada</span>';
             case 2:
@@ -28,7 +28,7 @@ class OsStatus extends Component
 
     public function render()
     {
-        
+
         return view('livewire.os-status', [
             'badge' => $this->osStatusConverte($this->status)
         ]);

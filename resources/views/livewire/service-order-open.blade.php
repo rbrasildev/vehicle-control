@@ -1,10 +1,14 @@
 <div>
-    <div class="flex gap-2 mb-2">
+    <div class="flex justify-between items-center gap-2 mb-2">
         <livewire:city-select />
+        <div class="flex  gap-2">
+            <p class="dark:text-gray-500 text-gray-600">Total</p>
+            <p class="dark:text-gray-500 text-gray-600">({{ $statusCounts }})</p>
+        </div>
     </div>
 
     <div wire:loading.class="opacity-50" wire:loading.class.remove="opacity-100"
-        class="relative overflow-x-auto sm:rounded-lg flex flex-col w-full h-full text-gray-700 border dark:border-gray-800 rounded-lg bg-clip-border p-3">
+        class="relative overflow-x-auto sm:rounded-lg flex flex-col w-full h-full text-gray-700 border dark:border-gray-800 rounded-lg bg-clip-border">
 
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
             <thead class="text-xs text-gray-700 uppercase dark:bg-gray-800">
@@ -33,7 +37,7 @@
                         </td>
                         <td class="p-2 border-b dark:border-gray-800">
                             <a target="blank"
-                                href="https:sgptins.redeconexaonet.com/admin/cliente/{{ $serviceOrder->cliente_id }}/edit/">
+                                href="https://{{ session('currentConnection') }}.redeconexaonet.com/admin/cliente/{{ $serviceOrder->cliente_id }}/edit/">
                                 <p class="text-sm dark:slate-800 dark:text-slate-300 font-bold">
                                     {{ $serviceOrder->nome }}</p>
                                 <p class="text-sm text-slate-500">{{ $serviceOrder->conteudo }}</p>
@@ -86,7 +90,7 @@
                 </select>
             </div>
             <div class="px-4 flex-1">
-                {{ $serviceOrders->links() }}
+                {{ $serviceOrders->links(data: ['scrollTo' => false]) }}
             </div>
         </div>
     </div>

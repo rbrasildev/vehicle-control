@@ -1,5 +1,5 @@
-<div wire:poll.5s="loadOpen">
-    <div class="flex gap-6 mb-2 justify-between">
+<div wire:poll.5s>
+    <div class="flex gap-6 mb-2 justify-between flex-wrap">
         <div class="flex gap-2 items-center">
             <div class="max-w-sm mx-start">
                 <label for="countries" class="block  text-sm font-medium text-gray-900 dark:text-white">Status</label>
@@ -12,8 +12,10 @@
                     <option value="1">Encerradas</option>
                 </select>
             </div>
-
-            <livewire:city-select />
+            <div>
+                <label for="city" class="block text-sm font-medium text-gray-900 dark:text-white">Cidade</label>
+                <livewire:city-select />
+            </div>
             <div class="max-w-sm mx-start">
                 <label for="pop" class="block  text-sm font-medium text-gray-900 dark:text-white">Pop</label>
                 <select id="pop" wire:model.live="pop_id"
@@ -29,35 +31,39 @@
         <ul class="flex gap-2 justify-end items-center">
             @foreach ($statusCounts as $item)
                 @if ($item->status == 0)
-                    <li class="flex flex-col justify-center items-center border-r px-4">
-                        <p class="dark:text-slate-400">Abertas</p>
+                    <li class="flex flex-col justify-center items-center px-4">
+                        <span
+                            class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Abertas</span>
                         <p class="font-bold dark:text-slate-200">{{ STR_PAD($item->total, 2, '0', STR_PAD_LEFT) }}</p>
                     </li>
                 @endif
 
 
                 @if ($item->status == 2)
-                    <li class="flex flex-col justify-center items-center border-r px-4">
-                        <p class="dark:text-slate-400">Execução</p>
+                    <li class="flex flex-col justify-center items-center px-4">
+                        <span
+                            class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Execução</span>
                         <p class="font-bold dark:text-slate-200">{{ STR_PAD($item->total, 2, '0', STR_PAD_LEFT) }}</p>
                     </li>
                 @endif
 
                 @if ($item->status == 3)
-                    <li class="flex flex-col justify-center items-center border-r px-4">
-                        <p class="dark:text-slate-400">Pendentes</p>
+                    <li class="flex flex-col justify-center items-center  px-4">
+                        <span
+                            class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Pendentes</span>
                         <p class="font-bold dark:text-slate-200">{{ STR_PAD($item->total, 2, '0', STR_PAD_LEFT) }}</p>
                     </li>
                 @endif
 
                 @if ($item->status == 1)
-                    <li class="flex flex-col justify-center items-center border-r  darK:border-slate-400 px-4">
-                        <p class="dark:text-slate-400">Encerradas</p>
+                    <li class="flex flex-col justify-center items-center px-4">
+                        <span
+                            class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Encerradas</span>
                         <p class="font-bold dark:text-slate-200">{{ STR_PAD($item->total, 2, '0', STR_PAD_LEFT) }}</p>
                     </li>
                 @endif
             @endforeach
-            <li class="flex flex-col justify-center items-center border-r  darK:border-slate-400 px-4">
+            <li class="flex flex-col justify-center items-center px-4">
                 <p class="dark:text-slate-400">Total</p>
                 <p class="font-bold dark:text-slate-200">{{ STR_PAD($clientes->count(), 2, '0', STR_PAD_LEFT) }}</p>
             </li>
@@ -65,7 +71,7 @@
 
         <ul class="list-group flex gap-2 items-center">
             @foreach ($technicianOsCount as $item)
-                <li class="flex items-center justify-center flex-col gap-1 border-r px-4">
+                <li class="flex items-center justify-center flex-col gap-1  px-4">
                     <p class="text-slate-800 dark:text-slate-200">{{ $item->username }}</p>
                     <strong
                         class="text-slate-800 dark:text-slate-200 font-bold">{{ STR_PAD($item->total, 2, '0', STR_PAD_LEFT) }}</strong>
@@ -78,54 +84,51 @@
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
             <thead class="text-xs text-gray-700 uppercase dark:bg-gray-800">
                 <tr>
-                    <th class="py-4 px-4 border-b dark:border-gray-700 dark:text-slate-400">Conexão</th>
-                    <th class="py-4 px-4 border-b dark:border-gray-700 dark:text-slate-400">Técnico.</th>
-                    <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">Cliente</th>
-                    <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">Endereço</th>
-                    <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">Bairro</th>
-                    <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">Agendamento</th>
-                    <th class="p-4 border-b dark:border-gray-700 dark:text-slate-400">Motivo</th>
-                    <th class="p-4 border-b dark:border-gray-700 dark:text-slate-400">Status</th>
+                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Wifi</th>
+                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Técnico</th>
+                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Cliente</th>
+                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Endereço</th>
+                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Bairro</th>
+                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Motivo</th>
+                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Status</th>
                 </tr>
             </thead>
 
             <tbody>
                 @forelse ($clientes as $cliente)
                     <tr wire:key="cliente-{{ $cliente->cliente_id }}">
-                        <td class="px-4 p-2 border-b dark:border-gray-800">
+                        <td class="text-center border-b dark:border-gray-800 p-1">
                             <livewire:is-online :login="$cliente->login" wire:key="is-online-{{ $cliente->cliente_id }}" />
                         </td>
-                        <td class="px-4 p-2 border-b dark:border-gray-800">
+                        <td class="border-b dark:border-gray-800 p-1">
                             <p class="text-sm text-slate-500">{{ $cliente->username }}</p>
                         </td>
-                        <td class="p-2 border-b dark:border-gray-800">
+                        <td class=" border-b dark:border-gray-800 p-2">
                             <a target="blank"
-                                href="{{ env('BASE_URL') }}/admin/cliente/{{ $cliente->cliente_id }}/edit/">
-                                <p class="text-sm dark:slate-800 dark:text-slate-300 font-bold">{{ $cliente->nome }}
+                                href="https://{{ session('currentConnection') }}.redeconexaonet.com/admin/cliente/{{ $cliente->cliente_id }}/edit/">
+                                <p class="text-sm dark:slate-800 dark:text-slate-300 font-semibold">
+                                    {{ $cliente->nome }}
                                 </p>
                                 @if ($cliente->servicoprestado)
                                     <p class="text-sm text-slate-500 dark:text-slate-200"><span
-                                            class="text-blue font-bold">Serviço prestado:</span>
+                                            class="text-blue-300 font-normal">Serviço prestado:</span>
                                         {{ $cliente->servicoprestado }}</p>
                                 @else
-                                    <p class="text-sm text-slate-500">{{ $cliente->conteudo }}</p>
+                                    <p class="text-sm text-slate-500"> {{ $cliente->conteudo }}
+                                    </p>
                                 @endif
-                            </a>
+                                </a>
                         </td>
-                        <td class="p-2 border-b dark:border-gray-800">
+                        <td class=" border-b dark:border-gray-800 p-1">
                             <p class="text-sm text-slate-500">{{ $cliente->logradouro }}</p>
                         </td>
-                        <td class="p-2 border-b dark:border-gray-800">
+                        <td class=" border-b dark:border-gray-800 p-1">
                             <p class="text-sm text-slate-500">{{ $cliente->bairro }}</p>
                         </td>
-                        <td class="p-2 border-b dark:border-gray-800">
+                        <td class=" border-b dark:border-gray-800 p-1">
                             <p class="text-sm text-slate-500">{{ $cliente->descricao }}</p>
                         </td>
-                        <td class="p-2 border-b dark:border-gray-800">
-                            <p class="text-sm text-slate-500">
-                                {{ \Carbon\Carbon::parse($cliente->data_agendamento)->format('d/m/Y') }}</p>
-                        </td>
-                        <td class="p-2 border-b dark:border-gray-800">
+                        <td class=" border-b dark:border-gray-800 p-1">
                             @if ($cliente->status != 2)
                                 <livewire:os-status :status="$cliente->status" wire:key="os-status{{ $cliente->cliente_id }}" />
                             @else

@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Collect;
 use App\Livewire\CreateService;
 use App\Livewire\CreateVehicle;
 use App\Livewire\Dashboard;
@@ -30,5 +31,7 @@ Route::get('/oil/create', CreateService::class);
 Route::get('/servico', ServiceOrder::class);
 Route::get('/servico/atrasadas', ServiceOrderLate::class);
 Route::get('/servico/hoje', ServiceOrderOpen::class);
+
+Route::get('/recolher', Collect::class);
 
 Route::get('/fttx/onu', FttxOnu::class);

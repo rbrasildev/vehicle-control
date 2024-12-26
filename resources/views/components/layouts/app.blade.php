@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>{{ config('app.name', 'SGPOS') }}</title>
     @livewireStyles
 </head>
@@ -51,6 +50,14 @@
                         <span class="ms-3 text-sm font-normal">Dashboard</span>
                     </a>
                 </li>
+                <li>
+                    <a href="/servico" wire:navigate
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ isActive('servico') }}">
+                        <i
+                            class="bx bxs-hard-hat text-xl flex-shrink-0 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
+                        <span class="flex-1 ms-3 whitespace-nowrap text-sm font-normal">Ordem de Serviços</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="/recolher" wire:navigate
@@ -64,14 +71,7 @@
                         <span class="flex-1 ms-3 whitespace-nowrap text-sm font-normal">Recolhimento</span>
                     </a>
                 </li>
-                <li>
-                    <a href="/servico" wire:navigate
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group {{ isActive('servico') }}">
-                        <i
-                            class="bx bxs-hard-hat text-xl flex-shrink-0 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"></i>
-                        <span class="flex-1 ms-3 whitespace-nowrap text-sm font-normal">Ordem de Serviços</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="/fttx/onu" wire:navigate
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100  group-hover:text-gray-900 dark:hover:bg-gray-700 group {{ isActive('onu') }}">
@@ -119,6 +119,5 @@
 
 @livewireScripts
 <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-
 
 </html>

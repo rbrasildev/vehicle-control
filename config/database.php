@@ -98,7 +98,7 @@ return [
         ],
 
 
-        'sgp' => [
+        'sgptins' => [
             'driver' => 'pgsql',
             'url' => env('DB_SGP_URL'),
             'host' => env('DB_SGP_HOST', '127.0.0.1'),
@@ -112,7 +112,7 @@ return [
             'search_path' => 'public',
             'sslmode' => 'prefer',
         ],
-        'pacaja' => [
+        'sgp' => [
             'driver' => 'pgsql',
             'url' => env('DB_SGP_PACAJA_URL'),
             'host' => env('DB_SGP_PACAJA_HOST', '127.0.0.1'),
@@ -126,7 +126,7 @@ return [
             'search_path' => 'public',
             'sslmode' => 'prefer',
         ],
-        'anapu' => [
+        'sgpanp' => [
             'driver' => 'pgsql',
             'url' => env('DB_SGP_ANAPU_URL'),
             'host' => env('DB_SGP_ANAPU_HOST', '127.0.0.1'),

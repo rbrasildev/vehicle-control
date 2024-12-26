@@ -12,7 +12,8 @@ class ClientCollectMonth extends Component
 
     protected $listeners = ['connectionUpdated'];
 
-
+    public $totalCanceled;
+    public $totalCollected;
     public $currentConnection;
     public $perPage = 6;
 
@@ -24,17 +25,48 @@ class ClientCollectMonth extends Component
     public function connectionUpdated($newConnection)
     {
         $this->currentConnection = $newConnection;
+    }
 
+    public function getTotalCanceled()
+    {
+        if (!$this->currentConnection) {
+            return 0;
+        }
+
+        return DB::connection($this->currentConnection)
+            ->table('admcore_clientecontrato')
+            ->join('admcore_clientecontratostatus', 'admcore_clientecontrato.status_id', '=', 'admcore_clientecontratostatus.id')
+            ->where('admcore_clientecontratostatus.status', 3) // Status de cancelado
+            ->whereRaw('EXTRACT(MONTH FROM admcore_clientecontrato.data_alteracao) = EXTRACT(MONTH FROM NOW())')
+            ->whereRaw('EXTRACT(YEAR FROM admcore_clientecontrato.data_alteracao) = EXTRACT(YEAR FROM NOW())')
+            ->count();
+    }
+
+    public function getTotalCollected()
+    {
+        if (!$this->currentConnection) {
+            return 0;
+        }
+
+        return DB::connection($this->currentConnection)
+            ->table('admcore_clientecontrato')
+            ->join('admcore_clientecontratostatus', 'admcore_clientecontrato.status_id', '=', 'admcore_clientecontratostatus.id')
+            ->join('admcore_servicointernet', 'admcore_clientecontrato.id', '=', 'admcore_servicointernet.clientecontrato_id')
+            ->join('netcore_onu', 'admcore_servicointernet.id', '=', 'netcore_onu.service_id')
+            ->where('admcore_clientecontratostatus.status', 3) // Status de cancelado
+            ->whereRaw('EXTRACT(MONTH FROM admcore_clientecontrato.data_alteracao) = EXTRACT(MONTH FROM NOW())')
+            ->whereRaw('EXTRACT(YEAR FROM admcore_clientecontrato.data_alteracao) = EXTRACT(YEAR FROM NOW())')
+            ->count();
     }
 
 
     public function loadOs()
     {
         if (!$this->currentConnection) {
-            return collect([]); // Retorna coleção vazia para evitar erro
+            return collect([]);
         }
 
-        // Consulta usando a conexão atual
+
         return DB::connection($this->currentConnection)
             ->table('admcore_cliente')
             ->join('admcore_pessoa', 'admcore_cliente.pessoa_id', '=', 'admcore_pessoa.id')
@@ -68,6 +100,8 @@ class ClientCollectMonth extends Component
 
     public function render()
     {
+        $this->totalCanceled = $this->getTotalCanceled();
+        $this->totalCollected = $this->getTotalCollected();
         return view('livewire.client-collect-month', [
             'collectThisMonth' => $this->loadOs(),
         ]);
