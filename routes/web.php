@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Livewire\Collect;
 use App\Livewire\CreateService;
 use App\Livewire\CreateVehicle;
@@ -11,15 +12,17 @@ use App\Livewire\Vehicles;
 use App\Livewire\ServiceOrder;
 use App\Livewire\ServiceOrderLate;
 use App\Livewire\ServiceOrderOpen;
+
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::view('/', 'welcome');
 
 
-Route::get('/dashboard', Dashboard::class);
-Route::get('/profile', User::class);
+Route::view('profile', 'profile')
+    ->middleware(['auth'])
+    ->name('profile');
+
+Route::get('/dashboard', Dashboard::class)->middleware(['auth'])->name('dashboard');
 
 Route::get('/veiculos', Vehicles::class);
 Route::get('/veiculos/details/{vehicle_id}', VehicleDetails::class);
@@ -35,3 +38,6 @@ Route::get('/servico/hoje', ServiceOrderOpen::class);
 Route::get('/recolher', Collect::class);
 
 Route::get('/fttx/onu', FttxOnu::class);
+
+
+require __DIR__ . '/auth.php';

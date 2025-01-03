@@ -9,15 +9,17 @@ use Livewire\WithPagination;
 class ServiceOrderOpen extends Component
 {
     use WithPagination;
-    protected $listeners = ['connectionUpdated'];
+    protected $listeners = ['connectionUpdated', 'popUpdated'];
 
     public $statusCounts;
     public $perPage = 20;
+    public $pop_id;
 
 
     public function loadOpen()
     {
         $connection = session('currentConnection', 'sgp');
+        $this->pop_id = session('currentPop');
         $query = DB::connection($connection)->table('admcore_pessoa')
             ->join('admcore_cliente', 'admcore_pessoa.id', '=', 'admcore_cliente.pessoa_id')
             ->join('admcore_endereco', 'admcore_cliente.endereco_id', '=', 'admcore_endereco.id')
@@ -53,6 +55,10 @@ class ServiceOrderOpen extends Component
                 'atendimento_motivoos.descricao'
             )
             ->where('atendimento_os.status', 0);
+        if (!is_null($this->pop_id) && $this->pop_id !== '') {
+            $query->where('admcore_pop.id', $this->pop_id);
+        }
+
         $open = $query->orderBy('data_agendamento', 'DESC')->paginate($this->perPage);
 
         $this->statusCounts = $open->total();

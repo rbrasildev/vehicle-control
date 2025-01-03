@@ -2,12 +2,13 @@
 
 namespace App\Livewire;
 
+
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
 class ServiceOrderToday extends Component
 {
-    protected $listeners = ['connectionUpdated'];
+    protected $listeners = ['connectionUpdated', 'popUpdated'];
 
     public $clientes;
     public $status;
@@ -17,15 +18,6 @@ class ServiceOrderToday extends Component
     public $pop_id;
 
 
-
-    public function getPop()
-    {
-        $connection = session('currentConnection', 'sgp');
-
-        $this->pops = DB::connection($connection)
-            ->table('admcore_pop')->get();
-    }
-
     public function mount($status = null)
     {
         $this->status = $status;
@@ -33,8 +25,9 @@ class ServiceOrderToday extends Component
 
     public function loadOpen()
     {
-        $this->getPop();
+        $this->pop_id = session('currentPop');
         $connection = session('currentConnection', 'sgp');
+
         $query = DB::connection($connection)
             ->table('admcore_pessoa')
             ->join('admcore_cliente', 'admcore_pessoa.id', '=', 'admcore_cliente.pessoa_id')
@@ -91,24 +84,20 @@ class ServiceOrderToday extends Component
             ->groupBy('status')
             ->get();
 
-        $this->technicianOsCount = DB::connection($connection)
-            ->table('admcore_pessoa as pessoa')
-            ->join('admcore_cliente as cliente', 'cliente.pessoa_id', '=', 'pessoa.id')
-            ->join('admcore_endereco as endereco', 'cliente.endereco_id', '=', 'endereco.id')
-            ->join('admcore_clientecontrato as contrato', 'cliente.id', '=', 'contrato.cliente_id')
-            ->join('atendimento_ocorrencia as ocorrencia', 'contrato.id', '=', 'ocorrencia.clientecontrato_id')
-            ->join('admcore_pop as pop', 'contrato.pop_id', '=', 'pop.id')
-            ->join('atendimento_os as ordem_servico', 'ocorrencia.id', '=', 'ordem_servico.ocorrencia_id')
-            ->join('auth_user as usuario', 'ordem_servico.responsavel_id', '=', 'usuario.id')
-            ->selectRaw('
-                COUNT(*) as total,
-                (COUNT(*) * 100.0) / SUM(COUNT(*)) OVER() AS percentual,
-                usuario.username as username,
-                usuario.name as name
-            ')
-            ->whereDate('ordem_servico.data_agendamento', '=', now()->toDateString())
-            ->where('ordem_servico.status', 0)
-            ->groupBy('usuario.username', 'usuario.name')
+        $query = DB::connection($connection)->table('admcore_pessoa')
+            ->join('admcore_cliente', 'admcore_cliente.pessoa_id', '=', 'admcore_pessoa.id')
+            ->join('admcore_endereco', 'admcore_cliente.endereco_id', '=', 'admcore_endereco.id')
+            ->join('admcore_clientecontrato', 'admcore_cliente.id', '=', 'admcore_clientecontrato.cliente_id')
+            ->join('admcore_pop', 'admcore_pop.id', '=', 'admcore_clientecontrato.pop_id')
+            ->join('atendimento_ocorrencia', 'admcore_clientecontrato.id', '=', 'atendimento_ocorrencia.clientecontrato_id')
+            ->join('atendimento_os', 'atendimento_ocorrencia.id', '=', 'atendimento_os.ocorrencia_id')
+            ->join('auth_user', 'atendimento_os.responsavel_id', '=', 'auth_user.id')
+            ->selectRaw('COUNT(*) AS total, auth_user.username, admcore_pop.id');
+        if (!is_null($this->pop_id) && $this->pop_id !== '') {
+            $query->where('admcore_pop.id', $this->pop_id);
+        }
+        $this->technicianOsCount = $query->whereDate('atendimento_os.data_agendamento', '=', DB::raw('CURRENT_DATE'))
+            ->groupBy('auth_user.username', 'admcore_pop.id')
             ->orderByDesc('total')
             ->get();
     }

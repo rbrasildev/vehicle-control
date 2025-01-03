@@ -2,17 +2,18 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use App\Models\Sgpos\auth_user;
+
 
 class Dashboard extends Component
 {
-    public $totalCollect;
-    protected $listeners = ['someEvent' => 'render'];
 
-    public function mount()
+
+    public function logout()
     {
-        $this->totalCollect = auth_user::count();
+        Auth::logout();
+        return redirect('/');
     }
 
 

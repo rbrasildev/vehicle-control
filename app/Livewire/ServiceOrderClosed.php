@@ -10,10 +10,11 @@ class ServiceOrderClosed extends Component
 {
     use WithPagination;
 
-    protected $listeners = ['connectionUpdated'];
+    protected $listeners = ['connectionUpdated', 'popUpdated'];
     public $statusCounts;
     public $perPage = 20;
     public $selectedDate;
+    public $pop_id;
 
     public function updatingSelectedDate()
     {
@@ -24,7 +25,7 @@ class ServiceOrderClosed extends Component
     {
 
         $connection = session('currentConnection', 'sgp');
-
+        $this->pop_id = session('currentPop');
         $query = DB::connection($connection)->table('admcore_pessoa')
             ->join('admcore_cliente', 'admcore_pessoa.id', '=', 'admcore_cliente.pessoa_id')
             ->join('admcore_endereco', 'admcore_cliente.endereco_id', '=', 'admcore_endereco.id')
@@ -60,6 +61,9 @@ class ServiceOrderClosed extends Component
                 'atendimento_motivoos.descricao'
             )
             ->where('atendimento_os.status', 1);
+        if (!is_null($this->pop_id) && $this->pop_id !== '') {
+            $query->where('admcore_pop.id', $this->pop_id);
+        }
         if ($this->selectedDate) {
             $query->whereDate('atendimento_os.data_finalizacao', '=', $this->selectedDate);
         }

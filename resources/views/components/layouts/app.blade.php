@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>{{ config('app.name', 'SGPOS') }}</title>
     @livewireStyles
 </head>
@@ -107,10 +107,11 @@
                 </li>
             </ul>
         </div>
+        <p>Sair</p>
     </aside>
 
-    <div class="p-4 sm:ml-64 bg-white dark:bg-gray-900">
-        <main>
+    <div class="sm:ml-64 bg-white dark:bg-gray-900">
+        <main class="p-4">
             {{ $slot }}
         </main>
     </div>

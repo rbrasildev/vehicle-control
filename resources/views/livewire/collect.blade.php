@@ -44,16 +44,16 @@
                             </a>
                         </td>
                         <td class="px-4 p-2 border-b dark:border-gray-800">
-                            <p class="text-sm text-slate-500 dark:text-slate-300">{{ $collect->onutype }}</p>
+                            <p class="text-sm font-normal text-slate-500 dark:text-slate-400">{{ $collect->onutype }}</p>
                         </td>
                         <td class="p-2 border-b dark:border-gray-800">
-                            <p class="text-sm text-slate-500 dark:text-slate-300">{{ $collect->logradouro }}</p>
+                            <p class="text-sm font-normal text-slate-500 dark:text-slate-400">{{ $collect->logradouro }}</p>
                         </td>
                         <td class="p-2 border-b dark:border-gray-800">
-                            <p class="text-sm text-slate-500 dark:text-slate-300">{{ $collect->bairro }}</p>
+                            <p class="text-sm font-normal text-slate-500 dark:text-slate-400">{{ $collect->bairro }}</p>
                         </td>
                         <td class="p-2 border-b dark:border-gray-800">
-                            <p class="text-sm text-slate-500 dark:text-slate-300">
+                            <p class="text-sm font-normal text-slate-500 dark:text-slate-400">
                                 {{ \Carbon\Carbon::parse($collect->data_alteracao)->format('d/m/Y') }}</p>
                         </td>
                         {{-- <td class="p-2 border-b dark:border-gray-800">
