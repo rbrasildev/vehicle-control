@@ -3,18 +3,13 @@
         <div class="flex gap-2 items-center">
             <div class="max-w-sm mx-start">
                 <label for="countries" class="block  text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                <select wire:model.live="status"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select wire:model.live="status" class="select select-bordered w-full max-w-xs">
                     <option value="" selected>Todas</option>
                     <option value="0">Abertas</option>
                     <option value="2">Execução</option>
                     <option value="3">Pendentes</option>
                     <option value="1">Encerradas</option>
                 </select>
-            </div>
-            <div>
-                <label for="city" class="block text-sm font-medium text-gray-900 dark:text-white">Cidade</label>
-                <livewire:city-select />
             </div>
         </div>
 
@@ -69,56 +64,48 @@
             @endforeach
         </ul>
     </div>
-    <div
-        class="relative overflow-x-auto sm:rounded-lg flex flex-col w-full h-full text-gray-700 border dark:border-gray-800 rounded-lg bg-clip-border">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-            <thead class="text-xs text-gray-700 uppercase dark:bg-gray-800">
+    <div class="overflow-x-auto">
+        <table class="table">
+            <thead>
                 <tr>
-                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Wifi</th>
-                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Técnico</th>
-                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Cliente</th>
-                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Endereço</th>
-                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Bairro</th>
-                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Motivo</th>
-                    <th class="px-2 py-4 border-b dark:border-gray-700 dark:text-slate-400">Status</th>
+                    <th>Wifi</th>
+                    <th>Técnico</th>
+                    <th>Cliente</th>
+                    <th>Endereço</th>
+                    <th>Bairro</th>
+                    <th>Motivo</th>
+                    <th>Status</th>
                 </tr>
             </thead>
 
             <tbody>
-                @forelse ($clientes as $cliente)
+                @forelse ($clientes as $key => $cliente)
                     <tr wire:key="cliente-{{ $cliente->cliente_id }}">
-                        <td class="text-center border-b dark:border-gray-800 p-1">
-                            <livewire:is-online :login="$cliente->login" wire:key="is-online-{{ $cliente->cliente_id }}" />
+                        <td @class(['bg-base-200' => $key % 2 == 0])> <livewire:is-online :login="$cliente->login"
+                                wire:key="is-online-{{ $cliente->cliente_id }}" />
                         </td>
-                        <td class="border-b dark:border-gray-800 p-1">
-                            <p class="text-sm text-slate-500">{{ $cliente->username }}</p>
-                        </td>
-                        <td class=" border-b dark:border-gray-800 p-2">
+                        <td @class(['bg-base-200' => $key % 2 == 0])>{{ $cliente->username }}</td>
+                        <td @class(['bg-base-200' => $key % 2 == 0])>
                             <a target="blank"
                                 href="https://{{ session('currentConnection') }}.redeconexaonet.com/admin/cliente/{{ $cliente->cliente_id }}/edit/">
                                 <p class="text-sm dark:slate-800 dark:text-slate-300 font-semibold">
                                     {{ $cliente->nome }}
                                 </p>
                                 @if ($cliente->servicoprestado)
-                                    <p class="text-sm text-slate-500 dark:text-slate-200"><span
-                                            class="text-blue-300 font-normal">Serviço prestado:</span>
-                                        {{ $cliente->servicoprestado }}</p>
-                                @else
-                                    <p class="text-sm text-slate-500"> {{ $cliente->conteudo }}
+                                    <p class="text-sm text-slate-500 dark:text-slate-200">
+                                        <span class="text-blue-300 font-normal">Serviço prestado:</span>
+                                        {{ $cliente->servicoprestado }}
                                     </p>
+                                @else
+                                    <p> {{ $cliente->conteudo }}</p>
                                 @endif
-                                </a>
+                            </a>
                         </td>
-                        <td class=" border-b dark:border-gray-800 p-1">
-                            <p class="text-sm text-slate-500">{{ $cliente->logradouro }}</p>
+                        <td @class(['bg-base-200' => $key % 2 == 0])>{{ $cliente->logradouro }}</td>
+                        <td @class(['bg-base-200' => $key % 2 == 0])>{{ $cliente->bairro }} </td>
+                        <td @class(['bg-base-200' => $key % 2 == 0])>{{ $cliente->descricao }}
                         </td>
-                        <td class=" border-b dark:border-gray-800 p-1">
-                            <p class="text-sm text-slate-500">{{ $cliente->bairro }}</p>
-                        </td>
-                        <td class=" border-b dark:border-gray-800 p-1">
-                            <p class="text-sm text-slate-500">{{ $cliente->descricao }}</p>
-                        </td>
-                        <td class=" border-b dark:border-gray-800 p-1">
+                        <td @class(['bg-base-200' => $key % 2 == 0])>
                             @if ($cliente->status != 2)
                                 <livewire:os-status :status="$cliente->status" wire:key="os-status{{ $cliente->cliente_id }}" />
                             @else

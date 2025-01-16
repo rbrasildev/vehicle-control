@@ -14,15 +14,15 @@ class OsStatus extends Component
     {
         switch ($status) {
             case 0:
-                return '<span style="background:#f05252; color:#e2e8f0" class="px-3 py-1 rounded-full text-slate-200 bg-red-500">Aberta</span>';
+                return '<span style="background:#f05252; color:#e2e8f0" class="px-3 w-32 py-1 rounded-full text-slate-200 bg-red-500">Aberta</span>';
             case 1:
-                return '<span class="px-3 py-1 rounded-full text-white bg-green-500">Finalizada</span>';
+                return '<span class="px-3 w-32 py-1 rounded-full text-white bg-green-600">Finalizada</span>';
             case 2:
-                return '<span class="px-3 py-1 rounded-full text-white bg-yellow-500">Execução</span>';
+                return '<span class="px-3 w-32 py-1 rounded-full text-white bg-yellow-500">Execução</span>';
             case 3:
-                return '<span class="px-3 py-1 rounded-full text-white bg-gray-500">Pendente</span>';
+                return '<span class="px-3 w-32 py-1 rounded-full text-white bg-gray-500">Pendente</span>';
             default:
-                return '<span class="px-3 py-1 rounded-full text-white bg-black">Desconhecido</span>';
+                return '<span class="px-3 w-32 py-1 rounded-full text-white bg-black">Desconhecido</span>';
         }
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Livewire\Collect;
+use App\Livewire\Collect\Collect;
 use App\Livewire\CreateService;
 use App\Livewire\CreateVehicle;
 use App\Livewire\Dashboard;
@@ -12,7 +12,7 @@ use App\Livewire\Vehicles;
 use App\Livewire\ServiceOrder;
 use App\Livewire\ServiceOrderLate;
 use App\Livewire\ServiceOrderOpen;
-
+use App\Livewire\TabCollect;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -35,7 +35,7 @@ Route::get('/servico', ServiceOrder::class);
 Route::get('/servico/atrasadas', ServiceOrderLate::class);
 Route::get('/servico/hoje', ServiceOrderOpen::class);
 
-Route::get('/recolher', Collect::class);
+Route::get('/recolher', TabCollect::class);
 
 Route::get('/fttx/onu', FttxOnu::class);
 

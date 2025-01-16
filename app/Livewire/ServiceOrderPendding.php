@@ -9,16 +9,16 @@ use Livewire\WithPagination;
 class ServiceOrderPendding extends Component
 {
     use WithPagination;
-    protected $listeners = ['connectionUpdated', 'popUpdated'];
+    protected $listeners = ['connectionUpdated'];
     public $statusCounts;
     public $perPage = 20;
-    public $pop_id;
+
 
 
     public function loadOs()
     {
         $connection = session('currentConnection', 'sgp');
-        $this->pop_id = session('currentPop');
+
         $query = DB::connection($connection)->table('admcore_pessoa')
             ->join('admcore_cliente', 'admcore_pessoa.id', '=', 'admcore_cliente.pessoa_id')
             ->join('admcore_endereco', 'admcore_cliente.endereco_id', '=', 'admcore_endereco.id')
@@ -54,10 +54,8 @@ class ServiceOrderPendding extends Component
                 'atendimento_motivoos.descricao'
             )
             ->where('atendimento_os.status', 3);
-            if (!is_null($this->pop_id) && $this->pop_id !== '') {
-                $query->where('admcore_pop.id', $this->pop_id);
-            }
-            $query->orderBy('data_agendamento', 'desc');
+
+        $query->orderBy('data_agendamento', 'desc');
 
 
         return $query->paginate($this->perPage);

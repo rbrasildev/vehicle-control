@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Collect;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
@@ -102,7 +102,7 @@ class ClientCollectMonth extends Component
     {
         $this->totalCanceled = $this->getTotalCanceled();
         $this->totalCollected = $this->getTotalCollected();
-        return view('livewire.client-collect-month', [
+        return view('livewire.collect.client-collect-month', [
             'collectThisMonth' => $this->loadOs(),
         ]);
     }

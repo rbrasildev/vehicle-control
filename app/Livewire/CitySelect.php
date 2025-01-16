@@ -2,43 +2,27 @@
 
 namespace App\Livewire;
 
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class CitySelect extends Component
 {
-    public $currentConnection;
-    public $currentPop = 1;
-    public $pops;
+    public $currentConnection = "sgp";
 
-    public function mount()
+    public function mount($value = null)
     {
-        $this->currentConnection = session('currentConnection', 'sgp');
+        $this->currentConnection = $value;
+        $this->currentConnection = session()->get('currentConnection', 'sgp');
     }
-
-    public function getPop()
-    {
-        $this->pops = DB::connection($this->currentConnection)
-            ->table('admcore_pop')->get();
-    }
-
 
     public function updatedCurrentConnection($value)
     {
-        session(['currentConnection' => $value]);
-        $this->dispatch('connectionUpdated', $value);
+        session()->put('currentConnection', $value ?? $this->currentConnection);
+        $this->dispatch('connectionUpdated', $value ?? $this->currentConnection);
     }
 
-
-    public function updatedCurrentPop($value)
-    {
-        session(['currentPop' => $value]);
-        $this->dispatch('popUpdated', $value,);
-    }
 
     public function render()
     {
-        $this->getPop();
         return view('livewire.city-select');
     }
 }

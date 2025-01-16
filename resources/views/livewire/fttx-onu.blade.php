@@ -1,48 +1,37 @@
 <div>
-    <div class="flex gap-2 items-center">
-        <livewire:city-select />
-        <div class="w-full max-w-sm min-w-[200px] relative">
-            <div class="relative">
-                <input type="text" wire:model.live="onu" placeholder="Buscar ONU..."
-                    class=" bg-white dark:bg-gray-800 w-full pr-11 h-10 pl-3 py-2.5 px-6 bg-transparent placeholder:text-slate-400 dark:text-slate-200 text-slate-700 text-sm border border-slate-200 rounded-lg transition duration-200 ease focus:outline-none focus:border-slate-400 hover:border-slate-400 shadow-sm focus:shadow-md" />
-                <button
-                    class="absolute h-8 w-8 right-1 top-1 my-auto px-2 flex justify-center items-center bg-wdark:hite dark:bg-gr bg-gray-200adark:y-800 rounded "
-                    type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                        stroke="currentColor" class="w-8 h-8 text-slate-600 ">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
+    <x-mary-header title="ONU" subtitle="Listagem de ONU" separator progress-indicator>
+        <x-slot:middle class="!justify-end">
+            <x-mary-input class="border border-base-content" wire:model.live="onu" icon="o-bolt"
+                placeholder="Buscar..." />
+        </x-slot:middle>
+        <x-slot:actions>
+            <livewire:city-select />
 
-    </div>
+        </x-slot:actions>
+    </x-mary-header>
 
-
-    <div wire:loading.class="opacity-50" wire:loading.class.remove="opacity-100"
-        class="relative overflow-x-auto sm:rounded-lg flex flex-col w-full h-full text-gray-700 border dark:border-gray-800 rounded-lg bg-clip-border mt-2">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-            <thead class="text-xs text-gray-700 uppercase dark:bg-gray-800">
+    <div class="overflow-x-auto">
+        <table class="table table-zebra ">
+            <thead>
                 <tr>
-                    <th class="py-4 px-4 border-b dark:border-gray-700 dark:text-slate-400">Nome</th>
-                    <th class="py-4 px-4 border-b dark:border-gray-700 dark:text-slate-400">ONU Type.</th>
-                    <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">MAC Address</th>
-                    <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">Status</th>
+                    <th>Nome</th>
+                    <th>ONU Type.</th>
+                    <th>MAC Address</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($results as $result)
                     <tr>
-                        <td class="px-4 p-2 border-b dark:border-gray-800">
+                        <td>
                             <a target="blank"
                                 href="https://{{ session('currentConnection') }}.redeconexaonet.com/admin/cliente/{{ $result->cliente_id }}/edit/">
                                 <p class="font-semibold text-gray-400">{{ $result->nome }}</p>
                             </a>
                         </td>
-                        <td class="px-4 p-2 border-b dark:border-gray-800">{{ $result->onutype }}</td>
-                        <td class="px-4 p-2 border-b dark:border-gray-800">{{ $result->phy_addr }}</td>
-                        <td class="px-4 p-2 border-b dark:border-gray-800">
+                        <td>{{ $result->onutype }}</td>
+                        <td>{{ $result->phy_addr }}</td>
+                        <td>
                             @if ($result->status == 3)
                                 <p class="text-red-500">Cancelado</p>
                             @elseif ($result->status == 1)
@@ -54,7 +43,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td class="px-4 p-2 border-b dark:border-gray-800" colspan="6">No results found.</td>
+                        <td colspan="6">No results found.</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -1,8 +1,4 @@
 <div>
-    <div class="flex gap-2 mb-2">
-        <livewire:city-select />
-    </div>
-
     <div wire:loading.class="opacity-50" wire:loading.class.remove="opacity-100"
         class="relative overflow-x-auto sm:rounded-lg flex flex-col w-full h-full text-gray-700 border dark:border-gray-800 rounded-lg bg-clip-border">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">

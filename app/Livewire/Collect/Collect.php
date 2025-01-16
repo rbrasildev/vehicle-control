@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Collect;
 
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -12,20 +12,25 @@ class Collect extends Component
 
     public $perPage = 100;
     public $collectTotal;
-    public $models;
+    public $models = [];
     public $sort;
-    public $pop_id;
+
 
     public function mount()
     {
         $this->getModels();
     }
 
+    public function placeholder()
+    {
+        return view('livewire.placeholder');
+    }
+
 
     public function loadOs()
     {
         $connection = session('currentConnection', 'sgp');
-        $this->pop_id = session('currentPop');
+
         $query = DB::connection($connection)
             ->table('admcore_cliente')
             ->join('admcore_pessoa', 'admcore_cliente.pessoa_id', '=', 'admcore_pessoa.id')
@@ -53,9 +58,7 @@ class Collect extends Component
                 'netcore_onu.phy_addr',
                 'admcore_clientecontratostatus.status AS status_descricao'
             );
-        if (!is_null($this->pop_id) &&  $this->pop_id !== '') {
-            $query->where('admcore_pop.id',  $this->pop_id);
-        }
+
         if (!empty($this->sort)) {
             $query->where('netcore_onu.onutype', $this->sort);
         }
@@ -69,7 +72,6 @@ class Collect extends Component
 
     public function getModels()
     {
-        // Configurar a conexão com o banco de dados
         $this->models = DB::connection(session('currentConnection', 'sgp'))
             ->table('admcore_cliente')
             ->join('admcore_pessoa', 'admcore_cliente.pessoa_id', '=', 'admcore_pessoa.id')
@@ -93,11 +95,10 @@ class Collect extends Component
         $this->sort = $sort;
     }
 
-
     public function render()
     {
         $this->getModels();
 
-        return view('livewire.collect', ['collectData' => $this->loadOs()]);
+        return view('livewire.collect.collect', ['collectData' => $this->loadOs()]);
     }
 }

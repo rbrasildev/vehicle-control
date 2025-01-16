@@ -16,7 +16,8 @@ class VehicleDetails extends Component
     {
         $this->vehicle_id = $vehicle_id;
         $this->vehicle = Vehicle::findOrFail($vehicle_id);
-        $this->oilChange =  OilChange::where('id_veiculo', $this->vehicle_id)->get();
+        $this->oilChange =  OilChange::with('typeOfOil')
+        ->where('id_veiculo', $this->vehicle_id)->get();
     }
     public function render()
     {
