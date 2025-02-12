@@ -7,27 +7,36 @@ use Illuminate\Support\Facades\DB;
 
 class ServiceOrderMotivoOs extends Component
 {
-    protected $listeners = ['connectionUpdated'];
+    protected $listeners = ['connectionUpdated', 'popUpdated'];
 
     public $data;
     public $currentConnection;
     public $selectedMonth;
     public $totalMonth;
+    public $pop;
 
     public function mount()
     {
         $this->currentConnection = session('currentConnection', 'sgp');
-        $this->selectedMonth = now()->format('Y-m'); 
+        $this->selectedMonth = now()->format('Y-m');
+        $this->pop = session('pop', 'PARINTINS');
     }
+
 
     public function connectionUpdated($newConnection)
     {
         $this->currentConnection = $newConnection;
     }
 
+    public function popUpdated($newPop)
+    {
+        $this->pop = $newPop;
+    }
+
+
     public function loadData()
     {
-        // Extrai ano e mês da variável $selectedMonth
+
         $year = date('Y', strtotime($this->selectedMonth));
         $month = date('m', strtotime($this->selectedMonth));
 
@@ -48,6 +57,9 @@ class ServiceOrderMotivoOs extends Component
             ')
             ->whereRaw("EXTRACT(MONTH FROM atendimento_os.data_finalizacao) = ?", [$month])
             ->whereRaw("EXTRACT(YEAR FROM atendimento_os.data_finalizacao) = ?", [$year])
+            ->when($this->currentConnection == 'sgptins', function ($query) {
+                $query->where('admcore_pop.cidade', '=', $this->pop);
+            })
             ->groupBy('atendimento_motivoos.descricao')
             ->orderByRaw('COUNT(*) DESC')
             ->get();

@@ -6,40 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <title>{{ config('app.name', 'SGPOS') }}</title>
     @livewireStyles
+
 </head>
 
 <body class="font-sans antialiased">
-
-    {{-- The navbar with `sticky` and `full-width` --}}
-    <x-mary-nav sticky full-width >
+    <x-mary-nav sticky full-width>
 
         <x-slot:brand>
-            {{-- Drawer toggle for "main-drawer" --}}
             <label for="main-drawer" class="lg:hidden mr-3">
                 <x-mary-icon name="o-bars-3" class="cursor-pointer" />
             </label>
 
-            {{-- Brand --}}
-            <div>SGPOS</div>
+            <div>SGP OS</div>
         </x-slot:brand>
 
-        {{-- Right side actions --}}
         <x-slot:actions>
-            <x-mary-button label="Messages" icon="o-envelope" link="###" class="btn-ghost btn-sm" responsive />
+            <livewire:sgpcity />
             <x-mary-theme-toggle />
         </x-slot:actions>
     </x-mary-nav>
 
-    {{-- The main content with `full-width` --}}
     <x-mary-main with-nav full-width>
-
-        {{-- This is a sidebar that works also as a drawer on small screens --}}
-        {{-- Notice the `main-drawer` reference here --}}
         <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-200">
 
-            {{-- User --}}
             @if ($user = auth()->user())
                 <x-mary-list-item :item="$user" value="name" sub-value="email" no-separator no-hover
                     class="pt-2">
@@ -50,28 +42,27 @@
                 </x-mary-list-item>
             @endif
 
-            {{-- Activates the menu item when a route matches the `link` property --}}
             <x-mary-menu activate-by-route>
                 <x-mary-menu-item title="Home" icon="o-home" link="/dashboard" />
-                <x-mary-menu-item title="Ordem de Serviços" icon="s-wrench-screwdriver" link="/servico" />
+                <x-mary-menu-item title="Ordens de Serviço" icon="s-wrench-screwdriver" link="/servico" />
                 <x-mary-menu-item title="Recolher" icon="s-arrow-uturn-left" link="/recolher" />
                 <x-mary-menu-item title="Onu" icon="m-device-tablet" link="/fttx/onu" />
+                <x-mary-menu-item title="Wifi" icon="o-wifi" link="/wifi" />
                 <x-mary-menu-item title="Veículos" icon="o-archive-box" link="/veiculos" />
-                <x-mary-menu-sub title="Settings" icon="o-cog-6-tooth">
-                    <x-mary-menu-item title="Wifi" icon="o-wifi" link="####" />
-                    <x-mary-menu-item title="Archives" icon="o-archive-box" link="####" />
+                <x-mary-menu-sub title="Usuários" icon="o-users">
+                    <x-mary-menu-item title="Perfil" icon="o-sparkles" link="/profile" />
+                    <x-mary-menu-item title="Users" icon="o-users" link="/users" />
                 </x-mary-menu-sub>
             </x-mary-menu>
-        </x-slot:sidebar>
 
-        {{-- The `$slot` goes here --}}
+        </x-slot:sidebar>
         <x-slot:content>
             {{ $slot }}
         </x-slot:content>
     </x-mary-main>
 
-    {{--  TOAST area --}}
     <x-mary-toast />
+
 </body>
 
 @livewireScripts

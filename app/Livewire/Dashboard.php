@@ -8,6 +8,18 @@ use Livewire\Component;
 
 class Dashboard extends Component
 {
+    public $currentConnection;
+
+    public function mount()
+    {
+        $this->currentConnection = session('currentConnection', 'sgptins');
+        $this->currentConnection && $this->updatedCurrentConnection($this->currentConnection);
+    }
+
+    public function updatedCurrentConnection($value)
+    {
+        session(['currentConnection' => $value]);
+    }
 
 
     public function logout()

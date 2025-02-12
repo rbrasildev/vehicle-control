@@ -69,6 +69,7 @@
             <thead>
                 <tr>
                     <th>Wifi</th>
+                    <th>Responsável</th>
                     <th>Técnico</th>
                     <th>Cliente</th>
                     <th>Endereço</th>
@@ -81,11 +82,12 @@
             <tbody>
                 @forelse ($clientes as $key => $cliente)
                     <tr wire:key="cliente-{{ $cliente->cliente_id }}">
-                        <td @class(['bg-base-200' => $key % 2 == 0])> <livewire:is-online :login="$cliente->login"
+                        <td @class(['text-red-500' => $cliente->prioridade == 3])> <livewire:is-online :login="$cliente->login"
                                 wire:key="is-online-{{ $cliente->cliente_id }}" />
                         </td>
-                        <td @class(['bg-base-200' => $key % 2 == 0])>{{ $cliente->username }}</td>
-                        <td @class(['bg-base-200' => $key % 2 == 0])>
+                        <td @class(['text-red-500' => $cliente->prioridade == 3])>{{ $cliente->equipe }}</td>
+                        <td @class(['text-red-500' => $cliente->prioridade == 3])>{{ $cliente->responsavel_username }}</td>
+                        <td @class(['text-red-500' => $cliente->prioridade == 3])>
                             <a target="blank"
                                 href="https://{{ session('currentConnection') }}.redeconexaonet.com/admin/cliente/{{ $cliente->cliente_id }}/edit/">
                                 <p class="text-sm dark:slate-800 dark:text-slate-300 font-semibold">
@@ -101,11 +103,11 @@
                                 @endif
                             </a>
                         </td>
-                        <td @class(['bg-base-200' => $key % 2 == 0])>{{ $cliente->logradouro }}</td>
-                        <td @class(['bg-base-200' => $key % 2 == 0])>{{ $cliente->bairro }} </td>
-                        <td @class(['bg-base-200' => $key % 2 == 0])>{{ $cliente->descricao }}
+                        <td @class(['text-red-500' => $cliente->prioridade == 3])>{{ $cliente->logradouro }}</td>
+                        <td @class(['text-red-500' => $cliente->prioridade == 3])>{{ $cliente->bairro }} </td>
+                        <td @class(['text-red-500' => $cliente->prioridade == 3])>{{ $cliente->descricao }}
                         </td>
-                        <td @class(['bg-base-200' => $key % 2 == 0])>
+                        <td @class(['text-red-500' => $cliente->prioridade == 3])>
                             @if ($cliente->status != 2)
                                 <livewire:os-status :status="$cliente->status" wire:key="os-status{{ $cliente->cliente_id }}" />
                             @else

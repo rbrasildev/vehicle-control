@@ -14,10 +14,12 @@ class CitySelect extends Component
         $this->currentConnection = session()->get('currentConnection', 'sgp');
     }
 
+
     public function updatedCurrentConnection($value)
     {
         session()->put('currentConnection', $value ?? $this->currentConnection);
         $this->dispatch('connectionUpdated', $value ?? $this->currentConnection);
+
     }
 
 

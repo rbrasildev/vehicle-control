@@ -12,11 +12,21 @@ class ClientCollectCount extends Component
     public $total = [];
     public $currentConnection;
     public $totalCollect = 0;
+    public $pop;
 
     public function mount()
     {
         $this->currentConnection = session('currentConnection', 'sgp');
+        $this->pop = session('pop', 'PARINTINS');
 
+        $this->loadTotal();
+        $this->collectCount();
+    }
+
+    public function popUpdated($newPop)
+    {
+        $this->pop = $newPop;
+        session()->put('pop', $this->pop);
         $this->loadTotal();
         $this->collectCount();
     }
@@ -41,6 +51,9 @@ class ClientCollectCount extends Component
             ->join('netcore_onu', 'admcore_servicointernet.id', '=', 'netcore_onu.service_id')
             ->join('admcore_clientecontratostatus', 'admcore_clientecontrato.status_id', '=', 'admcore_clientecontratostatus.id')
             ->where('admcore_clientecontratostatus.status', 3)
+            ->when($this->currentConnection == 'sgptins', function ($query) {
+                $query->where('admcore_pop.cidade', '=', $this->pop);
+            })
             ->select(
                 'admcore_cliente.id AS cliente_id',
                 'admcore_pessoa.nome',
@@ -75,6 +88,9 @@ class ClientCollectCount extends Component
             );
 
         $query->whereIn('atendimento_os.status', [0, 1, 3])
+            ->when($this->currentConnection == 'sgptins', function ($query) {
+                $query->where('admcore_pop.cidade', '=', $this->pop);
+            })
             ->groupBy('atendimento_os.status');
 
         $this->total = $query->get();

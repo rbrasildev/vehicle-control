@@ -36,6 +36,7 @@ class Pendding extends Component
 
     public function listPenddingRemove()
     {
+        $this->currentConnection = session()->get('currentConnection', 'sgp');
         return DB::connection($this->currentConnection)->table('admcore_pessoa')
             ->select(
                 'admcore_cliente.id as cliente_id',

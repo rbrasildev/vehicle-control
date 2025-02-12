@@ -9,27 +9,42 @@ use Livewire\WithPagination;
 class ServiceOrderOpen extends Component
 {
     use WithPagination;
-    protected $listeners = ['connectionUpdated'];
+    protected $listeners = ['connectionUpdated', 'popUpdated'];
 
     public $statusCounts;
-    public $perPage = 20;
+    public $perPage = 100;
     public $selectedDate;
+    public $pop = '';
+    public $currentConnection;
 
     public function placeholder()
     {
         return view('livewire.placeholder');
     }
 
+    public function mount()
+    {
+        $this->currentConnection = session('currentConnection', 'sgp');
+        session()->put('pop', $this->pop);
+    }
+
     public function connectionUpdated()
     {
+        $this->currentConnection = session('currentConnection', 'sgp');
+
+        $this->loadOpen();
+    }
+
+    public function popUpdated($newPop)
+    {
+        $this->currentConnection = session('currentConnection', 'sgp');
+        $this->pop = $newPop;
         $this->loadOpen();
     }
 
     public function loadOpen()
     {
-        $connection = session('currentConnection', 'sgp');
-
-        $query = DB::connection($connection)->table('admcore_pessoa')
+        $query = DB::connection(session('currentConnection', 'sgp'))->table('admcore_pessoa')
             ->join('admcore_cliente', 'admcore_pessoa.id', '=', 'admcore_cliente.pessoa_id')
             ->join('admcore_endereco', 'admcore_cliente.endereco_id', '=', 'admcore_endereco.id')
             ->join('admcore_clientecontrato', 'admcore_cliente.id', '=', 'admcore_clientecontrato.cliente_id')
@@ -63,7 +78,11 @@ class ServiceOrderOpen extends Component
                 'auth_user.username',
                 'atendimento_motivoos.descricao'
             )
-            ->where('atendimento_os.status', 0);
+            ->where('atendimento_os.status', 0)
+            ->when($this->pop, function ($query) {
+                $query->where('admcore_pop.cidade', $this->pop);
+            });
+
         if ($this->selectedDate) {
             $query->whereDate('atendimento_os.data_agendamento', '=', $this->selectedDate);
         }

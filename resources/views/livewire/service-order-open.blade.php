@@ -10,9 +10,10 @@
         ['key' => 'data_agendamento', 'label' => 'Agendamento', 'format' => ['date', 'd/m/Y']],
     ];
 @endphp
-<div wire:loading.class="opacity-50" wire:loading.class.remove="opacity-100">
-    <div class="flex items-center gap-2 mb-2">
-        <x-mary-datetime label="Selecione data" wire:model.live="selectedDate" icon="o-calendar" />
+<div>
+    <div class="flex justify-between items-center gap-2 mb-2">
+        <x-mary-datetime label="Selecione data" wire:model.live="selectedDate" icon="o-calendar"
+            class="border border-base-200" />
         <div class="flex  gap-2">
             <p class="dark:text-gray-500 text-gray-600">Total</p>
             <p class="dark:text-gray-500 text-gray-600">({{ $statusCounts }})</p>

@@ -13,22 +13,29 @@ class Negative extends Component
     public $collectTotal;
     public $models;
     public $sort;
-
+    public $currentConnection;
 
     public function mount()
     {
+        $this->currentConnection = session()->get('currentConnection', 'sgp');
         $this->getModels();
+        $this->loadOs();
     }
     public function placeholder()
     {
         return view('livewire.placeholder');
     }
 
+    public function connectionUpdated($newConnection)
+    {
+        $this->currentConnection = $newConnection;
+    }
+
     public function loadOs()
     {
-        $connection = session('currentConnection', 'sgp');
 
-        $query = DB::connection($connection)
+        $this->currentConnection = session()->get('currentConnection', 'sgp');
+        $query = DB::connection($this->currentConnection)
             ->table('admcore_pessoa')
             ->select(
                 'admcore_cliente.id as cliente_id',

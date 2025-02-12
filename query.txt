@@ -1,0 +1,81 @@
+SELECT 
+    atendimento_tipo.descricao as tipo_os,
+    COUNT(atendimento_tipo.descricao) as quantidade
+FROM admcore_pessoa 
+INNER JOIN admcore_cliente ON (admcore_pessoa.id = admcore_cliente.pessoa_id)
+INNER JOIN admcore_endereco ON (admcore_cliente.endereco_id = admcore_endereco.id)
+INNER JOIN admcore_clientecontrato ON(admcore_cliente.id = admcore_clientecontrato.cliente_id)
+INNER JOIN admcore_pop ON (admcore_pop.id = admcore_clientecontrato.pop_id)
+INNER JOIN admcore_servicointernet ON (admcore_servicointernet.clientecontrato_id = admcore_clientecontrato.id)
+INNER JOIN atendimento_ocorrencia ON(admcore_clientecontrato.id = atendimento_ocorrencia.clientecontrato_id) 
+INNER JOIN atendimento_os ON (atendimento_ocorrencia.id = atendimento_os.ocorrencia_id)
+INNER JOIN atendimento_tipo ON atendimento_tipo.id = atendimento_ocorrencia.tipo_id
+INNER JOIN auth_user AS responsavel ON atendimento_os.responsavel_id = responsavel.id
+INNER JOIN auth_user AS tecnico ON atendimento_os.usuario_id = tecnico.id 
+INNER JOIN atendimento_motivoos ON atendimento_os.motivoos_id = atendimento_motivoos.id
+AND DATE(atendimento_os.data_agendamento) >= '2025-01-01'
+AND DATE(atendimento_os.data_agendamento) <= '2025-01-31'
+AND atendimento_os.status = 1
+GROUP BY atendimento_tipo.descricao
+
+
+SELECT 
+    atendimento_motivoos.descricao as tipo_os,
+    COUNT(atendimento_tipo.descricao) as quantidade
+FROM admcore_pessoa 
+INNER JOIN admcore_cliente ON (admcore_pessoa.id = admcore_cliente.pessoa_id)
+INNER JOIN admcore_endereco ON (admcore_cliente.endereco_id = admcore_endereco.id)
+INNER JOIN admcore_clientecontrato ON(admcore_cliente.id = admcore_clientecontrato.cliente_id)
+INNER JOIN admcore_pop ON (admcore_pop.id = admcore_clientecontrato.pop_id)
+INNER JOIN admcore_servicointernet ON (admcore_servicointernet.clientecontrato_id = admcore_clientecontrato.id)
+INNER JOIN atendimento_ocorrencia ON(admcore_clientecontrato.id = atendimento_ocorrencia.clientecontrato_id) 
+INNER JOIN atendimento_os ON (atendimento_ocorrencia.id = atendimento_os.ocorrencia_id)
+INNER JOIN atendimento_tipo ON atendimento_tipo.id = atendimento_ocorrencia.tipo_id
+INNER JOIN auth_user AS responsavel ON atendimento_os.responsavel_id = responsavel.id
+INNER JOIN auth_user AS tecnico ON atendimento_os.usuario_id = tecnico.id 
+INNER JOIN atendimento_motivoos ON atendimento_os.motivoos_id = atendimento_motivoos.id
+WHERE DATE(atendimento_os.data_agendamento) >= '2025-01-01'
+AND DATE(atendimento_os.data_agendamento) <= '2025-01-31'
+GROUP BY atendimento_motivoos.descricao
+
+
+SELECT
+		admcore_cliente.id,
+		admcore_servicointernet.login,
+		admcore_pessoa.nome, 
+		admcore_endereco.logradouro, 
+		admcore_endereco.bairro, 
+		admcore_endereco.numero, 
+		admcore_endereco.complemento, 
+		admcore_endereco.pontoreferencia, 
+		admcore_pop.cidade, 
+		atendimento_os.prioridade, 
+		atendimento_os.data_agendamento, 
+		atendimento_os.data_checkin,
+		atendimento_os.data_finalizacao,
+		atendimento_os.latitude, 
+		atendimento_os.longitude, 
+		atendimento_os.conteudo, 
+		atendimento_os.servicoprestado, 
+		atendimento_os.usuario_id, 
+		atendimento_os.status, 
+		atendimento_os.djson, 
+		responsavel.username as tecnico,
+		tecnico.username as responsavel_username,
+		atendimento_motivoos.descricao,
+		atendimento_tipo.descricao as tipo_os
+				FROM admcore_pessoa 
+				INNER JOIN admcore_cliente ON (admcore_pessoa.id = admcore_cliente.pessoa_id)
+				INNER JOIN admcore_endereco ON (admcore_cliente.endereco_id = admcore_endereco.id)
+				INNER JOIN admcore_clientecontrato ON(admcore_cliente.id = admcore_clientecontrato.cliente_id)
+				INNER JOIN admcore_pop ON (admcore_pop.id = admcore_clientecontrato.pop_id)
+				INNER JOIN admcore_servicointernet ON (admcore_servicointernet.clientecontrato_id = admcore_clientecontrato.id)
+				INNER JOIN atendimento_ocorrencia ON(admcore_clientecontrato.id = atendimento_ocorrencia.clientecontrato_id) 
+				INNER JOIN atendimento_os ON (atendimento_ocorrencia.id = atendimento_os.ocorrencia_id)
+				INNER JOIN atendimento_tipo ON atendimento_tipo.id = atendimento_ocorrencia.tipo_id
+				INNER JOIN auth_user AS responsavel ON atendimento_os.responsavel_id = responsavel.id
+        INNER JOIN auth_user AS tecnico ON atendimento_os.usuario_id = tecnico.id 
+				INNER JOIN atendimento_motivoos ON atendimento_os.motivoos_id = atendimento_motivoos.id
+				AND DATE(atendimento_os.data_agendamento) >= '01/01/2025'
+				AND DATE(atendimento_os.data_agendamento) <= '31/01/2025'
+				AND atendimento_os.status = 1

@@ -1,36 +1,34 @@
 <div>
-    <div wire:loading.class="opacity-50" wire:loading.class.remove="opacity-100"
-        class="relative overflow-x-auto sm:rounded-lg flex flex-col w-full h-full text-gray-700 border dark:border-gray-800 rounded-lg bg-clip-border">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-            <thead class="text-xs text-gray-700 uppercase dark:bg-gray-800">
+    <div class="overflow-x-auto">
+        <table class="table table-zebra table-compact hover:table-zebra-hover">
+            <thead>
                 <tr>
-                    <th class="py-4 px-4 border-b dark:border-gray-700 dark:text-slate-400">Conexão</th>
-                    <th class="py-4 px-4 border-b dark:border-gray-700 dark:text-slate-400">Técnico.</th>
-                    <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">Cliente</th>
-                    <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">Endereço</th>
-                    <th class="py-4 border-b dark:border-gray-700 dark:text-slate-400">Bairro</th>
-                    <th class="p-4 border-b dark:border-gray-700 dark:text-slate-400">Motivo</th>
-                    <th class="p-4 border-b dark:border-gray-700 dark:text-slate-400">Agendamento</th>
-                    <th class="p-4 border-b dark:border-gray-700 dark:text-slate-400">Status</th>
+                    <th>Conexão</th>
+                    <th>Técnico.</th>
+                    <th>Cliente</th>
+                    <th>Endereço</th>
+                    <th>Bairro</th>
+                    <th>Cidade</th>
+                    <th>Motivo</th>
+                    <th>Agendamento</th>
+                    <th>Status</th>
                 </tr>
             </thead>
 
             <tbody>
                 @forelse ($serviceOrders as $serviceOrder)
                     <tr wire:key="cliente-{{ $serviceOrder->cliente_id }}">
-                        <td class="px-4 p-2 border-b dark:border-gray-800">
-                            <livewire:is-online :login="$serviceOrder->login"
-                                wire:key="is-online-{{ $serviceOrder->cliente_id }}" />
+                        <td>
+                            <livewire:is-online :login="$serviceOrder->login" wire:key="is-online-{{ $serviceOrder->cliente_id }}" />
                         </td>
-                        <td class="px-4 p-2 border-b dark:border-gray-800">
-                            <p class="text-sm text-slate-500">{{ $serviceOrder->username }}</p>
+                        <td>
+                            {{ $serviceOrder->username }}
                         </td>
-                        <td class="p-2 border-b dark:border-gray-800">
+                        <td>
                             <a target="blank"
                                 href="https://{{ session('currentConnection') }}.redeconexaonet.com/admin/cliente/{{ $serviceOrder->cliente_id }}/edit/">
-                                <p class="text-sm dark:slate-800 dark:text-slate-300 font-bold">
-                                    {{ $serviceOrder->nome }}</p>
-                                <p class="text-sm text-slate-500">{{ $serviceOrder->conteudo }}</p>
+                                <p>{{ $serviceOrder->nome }}</p>
+                                <p>{{ $serviceOrder->conteudo }}</p>
                                 @if ($serviceOrder->servicoprestado)
                                     <p class="text-sm text-slate-500 dark:text-slate-200"><span
                                             class="text-blue font-bold">Serviço prestado:</span>
@@ -38,22 +36,16 @@
                                 @endif
                             </a>
                         </td>
-                        <td class="p-2 border-b dark:border-gray-800">
-                            <p class="text-sm text-slate-500">{{ $serviceOrder->logradouro }}</p>
+                        <td> {{ $serviceOrder->logradouro }}</td>
+                        <td>{{ $serviceOrder->bairro }}</td>
+                        <td>{{ $serviceOrder->cidade }}</td>
+                        <td>{{ $serviceOrder->descricao }}</td>
+                        <td>
+
+                            {{ \Carbon\Carbon::parse($serviceOrder->data_agendamento)->format('d/m/Y') }}
                         </td>
-                        <td class="p-2 border-b dark:border-gray-800">
-                            <p class="text-sm text-slate-500">{{ $serviceOrder->bairro }}</p>
-                        </td>
-                        <td class="p-2 border-b dark:border-gray-800">
-                            <p class="text-sm text-slate-500">{{ $serviceOrder->descricao }}</p>
-                        </td>
-                        <td class="p-2 border-b dark:border-gray-800">
-                            <p class="text-sm text-slate-500">
-                                {{ \Carbon\Carbon::parse($serviceOrder->data_agendamento)->format('d/m/Y') }}</p>
-                        </td>
-                        <td class="p-2 border-b dark:border-gray-800">
-                            <livewire:os-status :status="$serviceOrder->status"
-                                wire:key="os-status{{ $serviceOrder->cliente_id }}" />
+                        <td>
+                            <livewire:os-status :status="$serviceOrder->status" wire:key="os-status{{ $serviceOrder->cliente_id }}" />
                         </td>
                     </tr>
                 @empty

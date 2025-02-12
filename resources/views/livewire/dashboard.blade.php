@@ -9,8 +9,9 @@
     <div>
         <livewire:service-order-motivo-os />
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2">
+    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
         <div>
+            <livewire:collect.collect-chart>
         </div>
         <livewire:collect.client-collect-month />
     </div>

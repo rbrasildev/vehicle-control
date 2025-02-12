@@ -10,19 +10,33 @@ class ServiceOrderLate extends Component
 {
     use WithPagination;
     protected $listeners = ['connectionUpdated'];
+
     public $statusCounts;
     public $perPage = 20;
+    public $currentConnection;
 
-    public function connectionUpdated()
+    public function mount()
     {
+        $this->currentConnection = session('currentConnection', 'sgp');
+        $this->loadOs();
+    }
+
+    public function placeholder()
+    {
+        return view('livewire.placeholder');
+    }
+
+
+    public function connectionUpdated($newConnection)
+    {
+        $this->currentConnection = $newConnection;
         $this->loadOs();
     }
 
 
     public function loadOs()
     {
-        $connection = session('currentConnection', 'sgp');
-        $query = DB::connection($connection)->table('admcore_pessoa')
+        $query = DB::connection($this->currentConnection)->table('admcore_pessoa')
             ->join('admcore_cliente', 'admcore_pessoa.id', '=', 'admcore_cliente.pessoa_id')
             ->join('admcore_endereco', 'admcore_cliente.endereco_id', '=', 'admcore_endereco.id')
             ->join('admcore_clientecontrato', 'admcore_cliente.id', '=', 'admcore_clientecontrato.cliente_id')
