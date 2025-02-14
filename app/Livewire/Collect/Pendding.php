@@ -41,6 +41,7 @@ class Pendding extends Component
             ->select(
                 'admcore_cliente.id as cliente_id',
                 'admcore_servicointernet.login',
+                'admcore_servicointernet.id as servico_internet_id',
                 'admcore_pessoa.nome',
                 'admcore_endereco.logradouro',
                 'admcore_endereco.bairro',

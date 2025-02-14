@@ -1,7 +1,7 @@
 <div wire:poll.10s>
     <div class="flex gap-6 mb-2 justify-between flex-wrap">
         <div class="flex gap-2 items-center">
-            <div class="max-w-sm mx-start">
+            {{-- <div class="max-w-sm mx-start">
                 <label for="countries" class="block  text-sm font-medium text-gray-900 dark:text-white">Status</label>
                 <select wire:model.live="status" class="select select-bordered w-full max-w-xs">
                     <option value="" selected>Todas</option>
@@ -10,7 +10,9 @@
                     <option value="3">Pendentes</option>
                     <option value="1">Encerradas</option>
                 </select>
-            </div>
+            </div> --}}
+            <x-mary-choices-offline class="w-full min-w-48" wire:model.live="currentPop" :options="$pops"
+                placeholder="Selecione um pop" single />
         </div>
 
         <ul class="flex gap-2 justify-end items-center">
