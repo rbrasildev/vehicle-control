@@ -17,38 +17,18 @@
 
         <ul class="flex gap-2 justify-end items-center">
             @foreach ($statusCounts as $item)
-                @if ($item->status == 0)
-                    <li class="flex flex-col justify-center items-center px-4">
-                        <span
-                            class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Abertas</span>
-                        <p class="font-bold dark:text-slate-200">{{ STR_PAD($item->total, 2, '0', STR_PAD_LEFT) }}</p>
-                    </li>
-                @endif
-
-
-                @if ($item->status == 2)
-                    <li class="flex flex-col justify-center items-center px-4">
-                        <span
-                            class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Execução</span>
-                        <p class="font-bold dark:text-slate-200">{{ STR_PAD($item->total, 2, '0', STR_PAD_LEFT) }}</p>
-                    </li>
-                @endif
-
-                @if ($item->status == 3)
-                    <li class="flex flex-col justify-center items-center  px-4">
-                        <span
-                            class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Pendentes</span>
-                        <p class="font-bold dark:text-slate-200">{{ STR_PAD($item->total, 2, '0', STR_PAD_LEFT) }}</p>
-                    </li>
-                @endif
-
-                @if ($item->status == 1)
-                    <li class="flex flex-col justify-center items-center px-4">
-                        <span
-                            class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Encerradas</span>
-                        <p class="font-bold dark:text-slate-200">{{ STR_PAD($item->total, 2, '0', STR_PAD_LEFT) }}</p>
-                    </li>
-                @endif
+                <li class="flex flex-col justify-center items-center px-4">
+                    <span @class([
+                        'text-xs font-normal me-2 px-2.5 py-0.5 rounded text-white',
+                        'bg-green-500' => $item->status == 0,
+                        'bg-red-500' => $item->status == 1,
+                        'bg-yellow-500' => $item->status == 2,
+                        'bg-slate-500' => $item->status == 3,
+                    ])>
+                        {{ $item->status_descricao }}
+                    </span>
+                    <p class="font-bold dark:text-slate-200">{{ STR_PAD($item->total, 2, '0', STR_PAD_LEFT) }}</p>
+                </li>
             @endforeach
             <li class="flex flex-col justify-center items-center px-4">
                 <p class="dark:text-slate-400">Total</p>
