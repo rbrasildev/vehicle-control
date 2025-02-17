@@ -21,6 +21,6 @@ class VehicleDetails extends Component
     }
     public function render()
     {
-        return view('livewire.vehicle-details', ['vehicle' => $this->vehicle, 'oilChange' => $this->oilChange]);
+        return view('livewire.vehicle-details');
     }
 }

@@ -10,9 +10,9 @@ use App\Livewire\Vehicles;
 use App\Livewire\TabServiceOrder;
 use App\Livewire\ServiceOrder\Index;
 use App\Livewire\ServiceOrderLate;
-use App\Livewire\ServiceOrderOpen;
 use App\Livewire\TabCollect;
-
+use App\Livewire\Wifi\Index as WifiIndex;
+use App\Livewire\Wifi\Wifi;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -24,10 +24,10 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Volt::route('/', 'index');                          // Home 
-Volt::route('/users', 'users.index');               // User (list) 
-Volt::route('/users/create', 'users.create');       // User (create) 
-Volt::route('/users/{user}/edit', 'users.edit');    // User (edit) 
+Volt::route('/', 'index');
+Volt::route('/users', 'users.index');
+Volt::route('/users/create', 'users.create');
+Volt::route('/users/{user}/edit', 'users.edit');
 
 Volt::route('/login', 'login')->name('login');
 
@@ -65,5 +65,6 @@ Route::get('/servico/atrasadas', ServiceOrderLate::class);
 Route::get('/servico/live', Index::class);
 
 Route::get('/recolher', TabCollect::class);
+Route::get('/wifi', WifiIndex::class);
 
 Route::get('/fttx/onu', FttxOnu::class);

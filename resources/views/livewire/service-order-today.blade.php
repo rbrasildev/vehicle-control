@@ -47,7 +47,7 @@
         </ul>
     </div>
     <div class="overflow-x-auto">
-        <table class="table">
+        <table class="table table-zebra-zebra">
             <thead>
                 <tr>
                     <th>Wifi</th>
